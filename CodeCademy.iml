@@ -8,5 +8,14 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="module-library">
+      <library name="sql">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/SQL/enu/mssql-jdbc-9.4.1.jre11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
