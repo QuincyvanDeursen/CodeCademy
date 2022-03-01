@@ -12,7 +12,7 @@ public class Module extends ContentItem{
         this.version = version;
         this.serialNumber = serialNumber;
     }
-    
+
     //Getters and Setters
     public double getVersion() {
         return version;
