@@ -11,7 +11,7 @@ public class SpeakerWebcast {
         this.email = email;
         this.name = name;
     }
-    
+
     //Getters and Setters
     public int getSpeakerID() {
         return speakerID;
