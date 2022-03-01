@@ -1,17 +1,17 @@
 package Domain;
 
-public class ContactPersonModule {
+public class SpeakerWebcast {
     private int speakerID;
-    private String name;
     private String email;
+    private String name;
 
     //Constructor
-    public ContactPersonModule(int speakerID, String name, String email) {
+    public SpeakerWebcast(int speakerID, String email, String name) {
         this.speakerID = speakerID;
-        this.name = name;
         this.email = email;
+        this.name = name;
     }
-
+    
     //Getters and Setters
     public int getSpeakerID() {
         return speakerID;
@@ -21,19 +21,19 @@ public class ContactPersonModule {
         this.speakerID = speakerID;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
