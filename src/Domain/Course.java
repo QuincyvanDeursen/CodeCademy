@@ -19,7 +19,7 @@ public class Course {
         this.relatedCourses = relatedCourses;
         this.contentItems = contentItems;
     }
-    
+
     //Setters and Getters
     public String getCourseName() {
         return courseName;
