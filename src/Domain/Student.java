@@ -1,11 +1,13 @@
 package Domain;
 
-import java.util.Date;
+
+import java.time.LocalDate;
+
 
 public class Student {
     private String email;
     private String name;
-    private Date birthDate;
+    private LocalDate birthDate;
     private Gender gender;
     private String city;
     private String postalCode;
@@ -14,7 +16,7 @@ public class Student {
     private String country;
 
     //constructor
-    public Student(String email, String name, Date birthDate, Gender gender, String city, String postalCode, String street, int houseNr, String country) {
+    public Student(String email, String name, LocalDate birthDate, Gender gender, String city, String postalCode, String street, int houseNr, String country) {
         this.email = email;
         this.name = name;
         this.birthDate = birthDate;
@@ -27,72 +29,84 @@ public class Student {
     }
 
     //Getters and setters
+
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthDate() {
+    public LocalDate getBirthdate() {
         return birthDate;
     }
+    public int getBirthDay() {
+        return this.birthDate.getDayOfMonth();
+    }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public int getBirthMonth() {
+        return this.birthDate.getMonthValue();
+    }
+
+    public int getBirthYear() {
+        return this.birthDate.getYear();
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
     public String getStreet() {
         return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public int getHouseNr() {
         return houseNr;
     }
 
-    public void setHouseNr(int houseNr) {
-        this.houseNr = houseNr;
-    }
-
     public String getCountry() {
         return country;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouseNr(int houseNr) {
+        this.houseNr = houseNr;
     }
 
     public void setCountry(String country) {

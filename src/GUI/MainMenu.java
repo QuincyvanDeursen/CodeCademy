@@ -20,7 +20,7 @@ public class MainMenu extends Application {
 
 
     //    Creating a pane for the scene.
-    private Scene getView(Stage window) {
+    public Scene getView(Stage window) {
         GridPane mainPane = getMainPane(window);
         Scene scene = new Scene(mainPane, 950, 300);
         return scene;
@@ -92,18 +92,12 @@ public class MainMenu extends Application {
     }
 
     // Handles all SetOnAction buttons.
-    private void createActionsForButtons(Button studentButton, Button cursusButton, Button enrollButton, Button certificateButton, Stage window) {
+    private void createActionsForButtons(Button studentButton, Button cursusButton, Button enrollButton, Button certificateButton, Stage stage) {
         StudentMenu studentMenu = new StudentMenu();
         //Opens student menu
         studentButton.setOnAction(actionEvent -> {
-            window.setScene(studentMenu.getView());
+            stage.setScene(studentMenu.getView(stage));
         });
-        //returns to main menu
-        studentMenu.backBtn.setOnAction(actionEvent -> {window.setScene(this.getView(window));
-        });
-
-
-
 
         cursusButton.setOnAction(actionEvent -> {
 //                    window.setScene(naamClassinvullen.getVieuw());
@@ -118,5 +112,8 @@ public class MainMenu extends Application {
         });
     }
 
+    public void loadMainMenu(){
+
+    }
 
 }

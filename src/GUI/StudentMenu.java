@@ -2,16 +2,39 @@ package GUI;
 
 import Domain.Gender;
 import Domain.Student;
+import Database.StudentDAO;
+import GUI.MainMenu;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
-import java.util.Date;
+
+import java.time.LocalDate;
+
+
 
 public class StudentMenu {
+    private StudentDAO studentDAO = new StudentDAO();
+    private MainMenu mainMenu = new MainMenu();
+
+    private TableView<Student> studentTable = new TableView<>();
+    private TableColumn<Student, String> emailCol = new TableColumn<>("Email");
+    private TableColumn<Student, String> nameCol = new TableColumn<>("Naam");
+    private TableColumn<Student, LocalDate> bdCol = new TableColumn<>("Geboortedatum");
+    private TableColumn<Student, String> genderCol = new TableColumn<>("Geslacht");
+    private TableColumn<Student, String> cityCol = new TableColumn<>("Woonplaats");
+    private TableColumn<Student, String> pcCol = new TableColumn<>("Postcode");
+    private TableColumn<Student, String> streetCol = new TableColumn<>("Straatnaam");
+    private TableColumn<Student, Integer> houseNrCol = new TableColumn<>("Huisnummer");
+    private TableColumn<Student, String> countryCol = new TableColumn<>("Land");
+
     private Label emailLabel = new Label("Email: ");
     private TextField tfEmail = new TextField();
 
@@ -19,7 +42,9 @@ public class StudentMenu {
     private TextField tfName = new TextField();
 
     private Label birthDateLabel = new Label("GeboorteDatum d/m/j: ");
-
+    private TextField tfBirthMonth = new TextField();
+    private TextField tfBirthDay = new TextField();
+    private TextField tfBirthYear = new TextField();
 
     private Label genderLabel = new Label("Geslacht: ");
     private ComboBox genderMenuBox = new ComboBox();
@@ -42,16 +67,17 @@ public class StudentMenu {
     private Button btnInsert = new Button("Toevoegen");
     private Button btnDelete = new Button("Verwijderen");
     private Button btnUpdate = new Button("Update");
-    public Button backBtn = new Button("Terug");
-    private String emailCellValue;
+    private Button btnSearch = new Button("Zoeken");
+    private Button btnRefresh = new Button("Refresh");
+    public Button btnBack = new Button("Terug");
+    private String originalEmail;
 
 
 
 
 
     // methode maakt GUI voor cursisten
-    public  Scene getView() {
-
+    public  Scene getView(Stage stage) {
         //  Borderpane with styling (parent)
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(25, 25, 25, 25));
@@ -62,23 +88,35 @@ public class StudentMenu {
         gridPane.setPadding(new Insets(25, 25, 25, 25));
 
         //Placing table and gridpane in parent.
-        bp.setRight(this.getTableWithData());
+        bp.setRight(this.getTableViewWithData());
         bp.setLeft(gridPane);
 
         //Creating hbox with styling and adding crud-buttons
-        HBox hboxBtns = new HBox();
-        hboxBtns.getChildren().setAll(this.backBtn, this.btnInsert, this.btnUpdate, this.btnDelete);
-        hboxBtns.setSpacing(25);
-        hboxBtns.setPadding(new Insets(20, 0, 0, 0));
+        HBox hboxBtns1 = new HBox();
+        hboxBtns1.getChildren().setAll(this.btnInsert, this.btnUpdate, this.btnDelete);
+        hboxBtns1.setSpacing(25);
+        hboxBtns1.setPadding(new Insets(20, 0, 0, 0));
+
+        //Creating hbox with styling and adding crud-buttons
+        HBox hboxBtns2 = new HBox();
+        hboxBtns2.getChildren().setAll(this.btnBack,  this.btnSearch, this.btnRefresh);
+        hboxBtns2.setSpacing(25);
+        hboxBtns2.setPadding(new Insets(20, 0, 0, 0));
 
         //Adding date inputfields to hbox
         HBox hboxBDate = new HBox();
-        TextField tfBirthMonth = new TextField();
-        TextField tfBirthDay = new TextField();
-        TextField tfBirthYear = new TextField();
         hboxBDate.getChildren().setAll(tfBirthDay, tfBirthMonth, tfBirthYear);
 
         //Set onclick event for buttons
+        btnInsert.setOnAction(actionEvent -> this.insertStudentToDatabase());
+        btnUpdate.setOnAction(actionEvent -> this.updateStudent());
+        btnSearch.setOnAction(actionEvent -> this.findStudent());
+        btnRefresh.setOnAction(actionEvent -> this.refreshTable());
+        btnDelete.setOnAction(actionEvent -> this.deleteStudent());
+        btnBack.setOnAction(actionEvent -> stage.setScene(mainMenu.getView(stage)));
+
+
+        setCellValueFromTableToTextField();
         // TODO: 2-3-2022
 
 
@@ -107,40 +145,150 @@ public class StudentMenu {
         gridPane.add(tfhouseNr, 1, 7);
         gridPane.add(countryLabel, 0, 8);
         gridPane.add(tfCountry, 1, 8);
-        gridPane.add(hboxBtns, 0, 9);
+        gridPane.add(hboxBtns1, 0, 9);
+        gridPane.add(hboxBtns2, 0, 10);
 
         //Creating scene and returning it
         Scene scene = new Scene(bp);
         return scene;
     }
 
+    //Method (for the insert button) to create a new student in the database
+    private void insertStudentToDatabase(){
+        Student student = createStudentObject();
+        if (studentDAO.createStudent(student)){
+            confirmationMessage("Student toegevoegd.");
+        } else{
+            warningMessage("Toevoegen van student mislukt.");
+        }
+        refreshTable();
+    }
+
+    //method (for the update button) to update a student in the database
+    private void updateStudent(){
+        Student student = createStudentObject();
+        if(studentDAO.updateStudent(student, originalEmail)){
+            confirmationMessage("Update uitgevoerd");
+        } else {
+            warningMessage("Update mislukt.");
+        }
+        refreshTable();
+    }
+
+    //method (for the search button) to find a student in the database
+    private void findStudent(){
+        this.studentTable.setItems(studentDAO.findStudent(tfEmail.getText()));
+    }
+
+    private void deleteStudent(){
+        if (studentDAO.deleteStudent(tfEmail.getText())){
+            confirmationMessage("Student verwijderd");
+        } else {
+            warningMessage("Verwijderen mislukt");
+        }
+        refreshTable();
+    }
+
+
+
+    //
+    private Student createStudentObject(){
+        // TODO: 4-3-2022 datum validatie moet nog toegevoegd worden
+        LocalDate date = LocalDate.of(
+                Integer.parseInt(tfBirthYear.getText()),
+                Integer.parseInt(tfBirthMonth.getText()),
+                Integer.parseInt(tfBirthDay.getText()));
+
+        // TODO: 4-3-2022 email en postcode validatie moet nog toegevoegd worden
+        Student student = new Student(
+                tfEmail.getText(),
+                tfName.getText(),
+                date,
+                Gender.valueToGenderEnum(genderMenuBox.getValue().toString()),
+                tfCity.getText(),
+                tfPostalCode.getText(),
+                tfStreet.getText(),
+                Integer.parseInt(tfhouseNr.getText()),
+                tfCountry.getText());
+        return student;
+    }
+
+
+
+    //Method which refreshes the table's content.
+    private void refreshTable(){
+        ObservableList<Student> studentList = studentDAO.getStudentList();
+        this.studentTable.setItems(studentList);
+    }
+
+
     //Method which returns the student tableview
-    public TableView<Student> getTableWithData() {
-        TableView<Student> studentTable = new TableView<>();
-        TableColumn<Student, String> emailCol = new TableColumn<>("Email");
-        TableColumn<Student, String> nameCol = new TableColumn<>("Naam");
-        TableColumn<Student, Date> bdCol = new TableColumn<>("Geboortedatum");
-        TableColumn<Student, String> genderCol = new TableColumn<>("Geslacht");
-        TableColumn<Student, String> cityCol = new TableColumn<>("Woonplaats");
-        TableColumn<Student, String> pcCol = new TableColumn<>("Postcode");
-        TableColumn<Student, String> streetCol = new TableColumn<>("Straatnaam");
-        TableColumn<Student, Integer> houseNrCol = new TableColumn<>("Huisnummer");
-        TableColumn<Student, String> countryCol = new TableColumn<>("Land");
-
-        studentTable.getColumns().clear();
-
-        studentTable.getColumns().addAll(
-                emailCol,
-                nameCol,
-                bdCol,
-                genderCol,
-                cityCol,
-                pcCol,
-                streetCol,
-                houseNrCol,
-                countryCol);
-
+    public TableView<Student> getTableViewWithData() {
+        this.studentTable.getColumns().clear();
+        this.studentTable.getColumns().addAll(
+                this.emailCol,
+                this.nameCol,
+                this.bdCol,
+                this.genderCol,
+                this.cityCol,
+                this.pcCol,
+                this.streetCol,
+                this.houseNrCol,
+                this.countryCol);
+        setStudentDataIntoTable(studentDAO.getStudentList(), this.studentTable);
         return studentTable;
+    }
+
+    //This method places the student data into the table.
+    public void setStudentDataIntoTable(ObservableList<Student> studentList, TableView tableView)  {
+        this.emailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        this.nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        this.genderCol.setCellValueFactory(new PropertyValueFactory<>("Gender"));
+        this.bdCol.setCellValueFactory(new PropertyValueFactory<>("Birthdate"));
+        this.cityCol.setCellValueFactory(new PropertyValueFactory<>("City"));
+        this.pcCol.setCellValueFactory(new PropertyValueFactory<>("PostalCode"));
+        this.streetCol.setCellValueFactory(new PropertyValueFactory<>("Street"));
+        this.houseNrCol.setCellValueFactory(new PropertyValueFactory<>("HouseNr"));
+        this.countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
+        tableView.setItems(studentList);
+    }
+
+    //This method fills in the textfields when a cell from the table is clicked.
+    private void setCellValueFromTableToTextField() {
+        try {
+        studentTable.setOnMouseClicked(e -> {
+                Student student = studentTable.getItems().get(studentTable.getSelectionModel().getSelectedIndex());
+                this.tfEmail.setText(student.getEmail());
+                this.tfName.setText(student.getName());
+                this.tfBirthDay.setText(String.valueOf(student.getBirthDay()));
+                this.tfBirthMonth.setText(String.valueOf(student.getBirthMonth()));
+                this.tfBirthYear.setText(String.valueOf(student.getBirthYear()));
+                this.genderMenuBox.setValue(student.getGender());
+                this.tfCity.setText(student.getCity());
+                this.tfPostalCode.setText(student.getPostalCode());
+                this.tfStreet.setText(student.getStreet());
+                this.tfhouseNr.setText(String.valueOf(student.getHouseNr()));
+                this.tfCountry.setText(student.getCountry());
+                //Line below saves the original email into a variable which enables to alter the email (because the old email is needed for the WHERE clause in the update query).
+                this.originalEmail = student.getEmail();
+        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //this method shows a confirmation alert
+    private static void confirmationMessage(String errorMsg) {
+        Alert message = new Alert(Alert.AlertType.CONFIRMATION);
+        message.setContentText(errorMsg);
+        message.show();
+    }
+
+    //this method shows a warning alert
+    private static void warningMessage(String errorMsg) {
+        Alert message = new Alert(Alert.AlertType.WARNING);
+        message.setContentText(errorMsg);
+        message.show();
     }
 
 
