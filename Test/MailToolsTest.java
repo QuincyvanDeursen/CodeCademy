@@ -17,6 +17,18 @@ public class MailToolsTest {
     }
 
     @Test
+    public void testInputRequiresEmailWithoutDotSignEnsuresFalse(){
+        // Arrange
+        String email = "test@gmailcom";
+
+        // Act
+        Boolean result = MailTools.validateMailAddress(email);
+
+        // Assert
+        assertEquals(false, result);
+    }
+
+    @Test
     public void testInputRequiresEmailWithMultipleSubdomainEnsuresFalse() {
         // Arrange
         String email = "test@student.mail.com";
