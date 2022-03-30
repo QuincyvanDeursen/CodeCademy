@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sql">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/SQL/enu/mssql-jdbc-9.4.1.jre11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
