@@ -3,8 +3,10 @@ package GUI;
 import Domain.Gender;
 import Domain.Student;
 import Database.StudentDAO;
-import GUI.MainMenu;
 
+import InputVerification.DateTools;
+import InputVerification.MailTools;
+import InputVerification.PostalCode;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -23,6 +25,7 @@ import java.time.LocalDate;
 public class StudentMenu {
     private StudentDAO studentDAO = new StudentDAO();
     private MainMenu mainMenu = new MainMenu();
+    private PostalCode postalCodeTool = new PostalCode();
 
     private TableView<Student> studentTable = new TableView<>();
     private TableColumn<Student, String> emailCol = new TableColumn<>("Email");
@@ -41,7 +44,7 @@ public class StudentMenu {
     private Label nameLabel = new Label("Naam: ");
     private TextField tfName = new TextField();
 
-    private Label birthDateLabel = new Label("GeboorteDatum d/m/j: ");
+    private Label birthDateLabel = new Label("GeboorteDatum dd/mm/jjjj: ");
     private TextField tfBirthMonth = new TextField();
     private TextField tfBirthDay = new TextField();
     private TextField tfBirthYear = new TextField();
@@ -115,10 +118,7 @@ public class StudentMenu {
         btnDelete.setOnAction(actionEvent -> this.deleteStudent());
         btnBack.setOnAction(actionEvent -> stage.setScene(mainMenu.getView(stage)));
 
-
         setCellValueFromTableToTextField();
-        // TODO: 2-3-2022
-
 
 
         // Enum geslachten ophalen en in dropdown menu zetten
@@ -155,7 +155,7 @@ public class StudentMenu {
 
     //Method (for the insert button) to create a new student in the database
     private void insertStudentToDatabase(){
-        Student student = createStudentObject();
+        Student student = createStudentObjectFromTextFields();
         if (studentDAO.createStudent(student)){
             confirmationMessage("Student toegevoegd.");
         } else{
@@ -166,13 +166,13 @@ public class StudentMenu {
 
     //method (for the update button) to update a student in the database
     private void updateStudent(){
-        Student student = createStudentObject();
-        if(studentDAO.updateStudent(student, originalEmail)){
-            confirmationMessage("Update uitgevoerd");
-        } else {
-            warningMessage("Update mislukt.");
+        Student student = createStudentObjectFromTextFields();
+        if (student != null){
+            if(studentDAO.updateStudent(student, originalEmail)){
+                confirmationMessage("Update uitgevoerd");
+            }
+            refreshTable();
         }
-        refreshTable();
     }
 
     //method (for the search button) to find a student in the database
@@ -191,28 +191,46 @@ public class StudentMenu {
 
 
 
-    //
-    private Student createStudentObject(){
-        // TODO: 4-3-2022 datum validatie moet nog toegevoegd worden
-        LocalDate date = LocalDate.of(
-                Integer.parseInt(tfBirthYear.getText()),
-                Integer.parseInt(tfBirthMonth.getText()),
-                Integer.parseInt(tfBirthDay.getText()));
+    //Method to create a student object. This method also uses the mail, date and postalcode tests to make sure the provided data is correct.
+    private Student createStudentObjectFromTextFields(){
+        LocalDate date;
+        int day =  Integer.parseInt(tfBirthDay.getText());
+        int month = Integer.parseInt(tfBirthMonth.getText());
+        int year = Integer.parseInt(tfBirthYear.getText());
+        String postalcode;
 
-        // TODO: 4-3-2022 email en postcode validatie moet nog toegevoegd worden
+        boolean dateBoolean = DateTools.validateDate(day, month, year);
+        if (!dateBoolean){
+            warningMessage("Ongeldige geboortedatum");
+            return null;
+        }
+        boolean mailBoolean = MailTools.validateMailAddress(tfEmail.getText());
+        if (!mailBoolean){
+            warningMessage("Ongeldig mail adres.");
+            return null;
+        }
+        try {
+            postalCodeTool.formatPostalCode(tfPostalCode.getText());
+            postalcode = postalCodeTool.formatPostalCode(tfPostalCode.getText());
+        } catch (Exception e){
+            warningMessage("ongeldige postcode ingevoerd.");
+            e.printStackTrace();
+            return null;
+        }
+
+        date = LocalDate.of(year,month,day);
         Student student = new Student(
                 tfEmail.getText(),
                 tfName.getText(),
                 date,
                 Gender.valueToGenderEnum(genderMenuBox.getValue().toString()),
                 tfCity.getText(),
-                tfPostalCode.getText(),
+                postalcode,
                 tfStreet.getText(),
                 Integer.parseInt(tfhouseNr.getText()),
                 tfCountry.getText());
         return student;
     }
-
 
 
     //Method which refreshes the table's content.
@@ -239,6 +257,7 @@ public class StudentMenu {
         return studentTable;
     }
 
+
     //This method places the student data into the table.
     public void setStudentDataIntoTable(ObservableList<Student> studentList, TableView tableView)  {
         this.emailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
@@ -256,7 +275,7 @@ public class StudentMenu {
     //This method fills in the textfields when a cell from the table is clicked.
     private void setCellValueFromTableToTextField() {
         try {
-        studentTable.setOnMouseClicked(e -> {
+            studentTable.setOnMouseClicked(e -> {
                 Student student = studentTable.getItems().get(studentTable.getSelectionModel().getSelectedIndex());
                 this.tfEmail.setText(student.getEmail());
                 this.tfName.setText(student.getName());
@@ -271,7 +290,7 @@ public class StudentMenu {
                 this.tfCountry.setText(student.getCountry());
                 //Line below saves the original email into a variable which enables to alter the email (because the old email is needed for the WHERE clause in the update query).
                 this.originalEmail = student.getEmail();
-        });
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
