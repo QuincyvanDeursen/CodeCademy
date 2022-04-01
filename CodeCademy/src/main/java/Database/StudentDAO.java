@@ -9,13 +9,15 @@ public class StudentDAO {
 
     // method to retrieve all student records in the database.
     public ArrayList<Student> getStudentList() {
-        ArrayList<Student> studentList = new ArrayList<>();
         String query = "SELECT * FROM Student";
-
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         try {
-            Connection con = DBConnection.getConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            ArrayList<Student> studentList = new ArrayList<>();
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Student student = new Student(
@@ -30,18 +32,26 @@ public class StudentDAO {
                         rs.getString("Country"));
                 studentList.add(student);
             }
-            con.close();
+            return studentList;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return studentList;
+        finally{
+                try { if (rs != null) rs.close(); } catch (Exception e) {};
+                try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+                try { if (conn != null) conn.close(); } catch (Exception e) {};
+            }
+        return null;
     }
 
     //method to create a student in the database
     public boolean createStudent(Student student) {
         String query = "INSERT INTO Student VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Connection conn = null;
+        PreparedStatement stmt = null;
         try {
-            PreparedStatement stmt = DBConnection.getConnection().prepareStatement(query);
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
             stmt.setString(1, student.getEmail());
             stmt.setString(2, student.getName());
             stmt.setString(3, student.getBirthdate().toString());
@@ -52,20 +62,25 @@ public class StudentDAO {
             stmt.setInt(8, student.getHouseNr());
             stmt.setString(9, student.getCountry());
             stmt.executeUpdate();
-            stmt.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+        finally{
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
         }
     }
 
     //Method to update a student in the database
     public boolean updateStudent(Student student, String originalEmail){
         String query = "UPDATE Student SET Email = ?, Name = ?, Birthdate = ?, Gender = ?, City = ?, PostalCode = ?, Street = ?, HouseNr = ?, Country = ? WHERE Email = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
         try {
-            Connection con = DBConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(query);
+             conn = DBConnection.getConnection();
+             stmt = conn.prepareStatement(query);
             stmt.setString(1, student.getEmail());
             stmt.setString(2, student.getName());
             stmt.setString(3, student.getBirthdate().toString());
@@ -77,22 +92,31 @@ public class StudentDAO {
             stmt.setString(9, student.getCountry());
             stmt.setString(10, originalEmail);
             stmt.executeUpdate();
-            con.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        finally{
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return false;
     }
 
-    //Method to find a particular student in the database
+    //Method to find students in the database. This is not the method to find exactly one Student.
+    //This method makes use of the like clause, so it may return multiple student results.
+    //This method is used for a user-friendly search approach in the student table.
     public ArrayList<Student> findStudent(String email){
-        ArrayList<Student> studentList = new ArrayList<>();
-        String query = "SELECT * FROM student WHERE Email LIKE '%" + email + "%'";
+        String query = "SELECT * FROM student WHERE Email LIKE ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         try {
-            Connection con = DBConnection.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<Student> studentList = new ArrayList<>();
+             conn = DBConnection.getConnection();
+             stmt = conn.prepareStatement(query);
+             stmt.setString(1, "%" + email + "%");
+             rs = stmt.executeQuery();
             while (rs.next()) {
                 Student student = new Student(
                         rs.getString("Email"),
@@ -106,24 +130,38 @@ public class StudentDAO {
                         rs.getString("Country"));
                 studentList.add(student);
             }
-            con.close();
+            return studentList;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return studentList;
+        finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return null;
     }
 
+    //Method to delete a student from the database.
     public boolean deleteStudent(String email){
         String query = "DELETE FROM student WHERE Email = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         try {
-            Connection con = DBConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(query);
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
             stmt.setString(1, email);
             stmt.executeUpdate();
             return true;
         } catch (SQLException e){
             e.printStackTrace();
-            return  false;
         }
+        finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return  false;
     }
 }
