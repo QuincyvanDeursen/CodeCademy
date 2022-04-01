@@ -2,15 +2,14 @@ package Database;
 
 import Domain.Gender;
 import Domain.Student;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class StudentDAO {
 
     // method to retrieve all student records in the database.
-    public ObservableList<Student> getStudentList() {
-        ObservableList<Student> studentList = FXCollections.observableArrayList();
+    public ArrayList<Student> getStudentList() {
+        ArrayList<Student> studentList = new ArrayList<>();
         String query = "SELECT * FROM Student";
 
         try {
@@ -87,8 +86,8 @@ public class StudentDAO {
     }
 
     //Method to find a particular student in the database
-    public ObservableList findStudent(String email){
-        ObservableList<Student> studentList = FXCollections.observableArrayList();
+    public ArrayList<Student> findStudent(String email){
+        ArrayList<Student> studentList = new ArrayList<>();
         String query = "SELECT * FROM student WHERE Email LIKE '%" + email + "%'";
         try {
             Connection con = DBConnection.getConnection();

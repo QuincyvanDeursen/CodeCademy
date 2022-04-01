@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 
 
 public class StudentMenu {
@@ -177,7 +177,14 @@ public class StudentMenu {
 
     //method (for the search button) to find a student in the database
     private void findStudent(){
-        this.studentTable.setItems(studentDAO.findStudent(tfEmail.getText()));
+        ArrayList<Student> foundStudents = studentDAO.findStudent(tfEmail.getText());
+        if (foundStudents.size() !=0){
+            this.studentTable.getItems().clear();
+            for (Student student: foundStudents) {
+                this.studentTable.getItems().add(student);
+            }
+        }
+
     }
 
     private void deleteStudent(){
@@ -235,8 +242,12 @@ public class StudentMenu {
 
     //Method which refreshes the table's content.
     private void refreshTable(){
-        ObservableList<Student> studentList = studentDAO.getStudentList();
-        this.studentTable.setItems(studentList);
+        this.studentTable.getItems().clear();
+        ArrayList<Student> studentList = studentDAO.getStudentList();
+        for (Student student: studentList) {
+            this.studentTable.getItems().add(student);
+        }
+
     }
 
 
@@ -259,7 +270,7 @@ public class StudentMenu {
 
 
     //This method places the student data into the table.
-    public void setStudentDataIntoTable(ObservableList<Student> studentList, TableView tableView)  {
+    public void setStudentDataIntoTable(ArrayList<Student> studentList, TableView tableView)  {
         this.emailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         this.genderCol.setCellValueFactory(new PropertyValueFactory<>("Gender"));
@@ -269,7 +280,10 @@ public class StudentMenu {
         this.streetCol.setCellValueFactory(new PropertyValueFactory<>("Street"));
         this.houseNrCol.setCellValueFactory(new PropertyValueFactory<>("HouseNr"));
         this.countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
-        tableView.setItems(studentList);
+        for (Student student:
+             studentList) {
+            this.studentTable.getItems().add(student);
+        }
     }
 
     //This method fills in the textfields when a cell from the table is clicked.
