@@ -1,5 +1,6 @@
 package GUI;
 
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,6 +25,7 @@ public class MainMenu extends Application implements EventHandler {
     private Button studentButton = new Button("Cursisten");
     private Button enrollButton = new Button("Inschrijvingen");
     private Button statisticsButton = new Button("Statistieken");
+    private Button topWebcastsButton = new Button("Top 3 Webcasts");
     private Stage stage;
 
 
@@ -46,13 +48,15 @@ public class MainMenu extends Application implements EventHandler {
         setButtonStyling(this.statisticsButton);
         setLabelStyling(this.crudLabel);
         setLabelStyling(this.statisticsLabel);
+        setButtonStyling(this.topWebcastsButton);
 
         this.enrollButton.setOnAction(this::handle);
         this.studentButton.setOnAction(this::handle);
         this.statisticsButton.setOnAction(this::handle);
+        this.topWebcastsButton.setOnAction(this::handle);
 
 
-        Scene scene = new Scene(flowPane, 250, 500);
+        Scene scene = new Scene(flowPane, 250, 650);
         return scene;
     }
 
@@ -60,7 +64,7 @@ public class MainMenu extends Application implements EventHandler {
     private FlowPane getMainPane(Stage window) {
         FlowPane flowPane = new FlowPane(Orientation.VERTICAL);
         flowPane.setColumnHalignment(HPos.CENTER);
-        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton);
+        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton, topWebcastsButton);
         return flowPane;
     }
 
@@ -106,5 +110,9 @@ public class MainMenu extends Application implements EventHandler {
 //             StatisticsMenu statisticsMenu = new StatisticsMenu();
 //            stage.setScene(statisticsMenu.getView(stage));
 //        }
+        if (event.getSource() == topWebcastsButton) {
+            TopWebcastsMenu topWebcastsMenu = new TopWebcastsMenu();
+            stage.setScene(topWebcastsMenu.getView(stage));
+        }
     }
 }
