@@ -160,9 +160,7 @@ public class EnrollmentMenu {
 
     //Method which returns the Enrollment tableview
     public TableView<Enrollment> getTableWithData() {
-        this.enrollTable = new TableView<>();
         enrollTable.getColumns().clear();
-
         enrollTable.getColumns().addAll(
                 emailCol,
                 dateCol,
