@@ -6,8 +6,8 @@ public class ContactPersonModule {
     private String email;
 
     //Constructor
-    public ContactPersonModule(int speakerID, String name, String email) {
-        this.speakerID = speakerID;
+    public ContactPersonModule( String name, String email) {
+
         this.name = name;
         this.email = email;
     }
