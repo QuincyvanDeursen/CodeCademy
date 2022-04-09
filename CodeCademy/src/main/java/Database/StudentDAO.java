@@ -164,4 +164,45 @@ public class StudentDAO {
         }
         return  false;
     }
+    public Student readStudent(String email){
+        String query = "SELECT * FROM Student WHERE Email = '" + email + "'";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+
+
+            // Check if there is a result in the set
+            if(rs.next()){
+                System.out.println("Student object is being made");
+                return new Student(
+                        rs.getString("Email"),
+                        rs.getString("Name"),
+                        rs.getDate("Birthdate").toLocalDate(),
+                        Gender.valueToGenderEnum(rs.getString("Gender")),
+                        rs.getString("City"),
+                        rs.getString("PostalCode"),
+                        rs.getString("Street"),
+                        rs.getInt("HouseNr"),
+                        rs.getString("Country")
+                );
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+            e.printStackTrace();
+            System.out.println("readStudent catch has been rolled");
+        }
+        finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+
+        // Return null on error
+        return null;
+    }
 }

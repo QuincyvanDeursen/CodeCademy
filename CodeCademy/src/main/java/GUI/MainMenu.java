@@ -97,11 +97,11 @@ public class MainMenu extends Application implements EventHandler {
             stage.setScene(studentMenu.getView(stage));
             return;
         }
-//       if (event.getSource() == enrollButton){
-//             EnrollMenu enrollMenu = new EnrollMenu();
-//            stage.setScene(enrollMenu.getView(stage));
-//            return;
-//        }
+       if (event.getSource() == enrollButton){
+             EnrollmentMenu enrollmentMenu = new EnrollmentMenu();
+            stage.setScene(enrollmentMenu.getView(stage));
+            return;
+        }
 //        if (event.getSource() == statisticsButton){
 //             StatisticsMenu statisticsMenu = new StatisticsMenu();
 //            stage.setScene(statisticsMenu.getView(stage));
