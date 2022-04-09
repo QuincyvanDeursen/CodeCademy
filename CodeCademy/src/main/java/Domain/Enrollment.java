@@ -1,14 +1,15 @@
 package Domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Enrollment {
     private Student student;
     private Course course;
-    private Date registrationDate;
+    private LocalDate registrationDate;
 
     //Constructor
-    public Enrollment(Student student, Course course, Date registrationDate) {
+    public Enrollment(Student student, Course course, LocalDate registrationDate) {
         this.student = student;
         this.course = course;
         this.registrationDate = registrationDate;
@@ -31,11 +32,11 @@ public class Enrollment {
         this.course = course;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 }
