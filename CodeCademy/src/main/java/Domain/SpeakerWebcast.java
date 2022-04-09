@@ -6,10 +6,10 @@ public class SpeakerWebcast {
     private String name;
 
     //Constructor
-    public SpeakerWebcast(int speakerID, String email, String name) {
+    public SpeakerWebcast(int speakerID, String email, String OrganizationSpeaker) {
         this.speakerID = speakerID;
         this.email = email;
-        this.name = name;
+        this.name = OrganizationSpeaker;
     }
 
     //Getters and Setters
