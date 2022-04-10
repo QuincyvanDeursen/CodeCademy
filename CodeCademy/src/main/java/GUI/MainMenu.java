@@ -25,7 +25,6 @@ public class MainMenu extends Application implements EventHandler {
     private Button studentButton = new Button("Cursisten");
     private Button enrollButton = new Button("Inschrijvingen");
     private Button statisticsButton = new Button("Statistieken");
-    private Button topWebcastsButton = new Button("Top 3 Webcasts");
     private Stage stage;
 
 
@@ -48,15 +47,13 @@ public class MainMenu extends Application implements EventHandler {
         setButtonStyling(this.statisticsButton);
         setLabelStyling(this.crudLabel);
         setLabelStyling(this.statisticsLabel);
-        setButtonStyling(this.topWebcastsButton);
 
         this.enrollButton.setOnAction(this::handle);
         this.studentButton.setOnAction(this::handle);
         this.statisticsButton.setOnAction(this::handle);
-        this.topWebcastsButton.setOnAction(this::handle);
 
 
-        Scene scene = new Scene(flowPane, 250, 650);
+        Scene scene = new Scene(flowPane, 250, 550);
         return scene;
     }
 
@@ -64,7 +61,7 @@ public class MainMenu extends Application implements EventHandler {
     private FlowPane getMainPane(Stage window) {
         FlowPane flowPane = new FlowPane(Orientation.VERTICAL);
         flowPane.setColumnHalignment(HPos.CENTER);
-        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton, topWebcastsButton);
+        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton);
         return flowPane;
     }
 
@@ -106,9 +103,9 @@ public class MainMenu extends Application implements EventHandler {
             stage.setScene(enrollmentMenu.getView(stage));
             return;
         }
-//        if (event.getSource() == statisticsButton){
-//             StatisticsMenu statisticsMenu = new StatisticsMenu();
-//            stage.setScene(statisticsMenu.getView(stage));
-//        }
+        if (event.getSource() == statisticsButton){
+             StatisticsMenu statisticsMenu = new StatisticsMenu();
+            stage.setScene(statisticsMenu.getView(stage));
+        }
     }
 }
