@@ -33,7 +33,6 @@ public class EnrollmentMenu {
     private CourseDAO courseDAO = new CourseDAO();
 
     public Button backBtn = new Button("Terug");
-    private final Button enrollBtn = new Button("Inschrijven");
     private final Label introText = new Label("Schrijf je in!");
 
     private final Label mailText = new Label("* email: ");
