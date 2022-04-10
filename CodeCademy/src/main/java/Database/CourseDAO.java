@@ -10,8 +10,8 @@ public class CourseDAO {
     ContentItemDAO contentItemDAO = new ContentItemDAO();
 
 
-    public Course readCourse(String name) {
-        String query = "SELECT * FROM Course WHERE CourseName = '" + name + "'";
+    public Course readCourse(String courseName) {
+        String query = "SELECT * FROM Course WHERE CourseName = ? ";
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -19,6 +19,7 @@ public class CourseDAO {
         try {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
+            stmt.setString(1,courseName);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 System.out.println("Course object being made");
@@ -28,24 +29,16 @@ public class CourseDAO {
                         Level.returnEnum(rs.getString("Level")),
                         rs.getString("Description"),
                         null,
-                        contentItemDAO.getContentItemsForCourse(name)
+                        contentItemDAO.getContentItemsForCourse(courseName)
                 );
             }
         } catch (Exception e) {
             e.getStackTrace();
             System.out.println("readCourse");
         } finally {
-            try {
-                if (rs != null) rs.close();
-            } catch (Exception e) {
-            }
-            try {
-                if (stmt != null) stmt.close();
-            } catch (Exception e) {
-            }
-            try {
-                if (conn != null) conn.close();
-            } catch (Exception e) {
+            try {if (rs != null) rs.close(); } catch (Exception e) {
+            }try {if (stmt != null) stmt.close(); } catch (Exception e) {
+            }try {if (conn != null) conn.close();} catch (Exception e) {
             }
         }
         return null;

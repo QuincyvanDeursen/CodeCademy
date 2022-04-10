@@ -165,13 +165,14 @@ public class StudentDAO {
         return  false;
     }
     public Student readStudent(String email){
-        String query = "SELECT * FROM Student WHERE Email = '" + email + "'";
+        String query = "SELECT * FROM Student WHERE Email = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try{
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
+            stmt.setString(1, email);
             rs = stmt.executeQuery();
 
 

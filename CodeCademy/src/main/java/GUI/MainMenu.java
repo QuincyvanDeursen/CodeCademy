@@ -110,9 +110,5 @@ public class MainMenu extends Application implements EventHandler {
 //             StatisticsMenu statisticsMenu = new StatisticsMenu();
 //            stage.setScene(statisticsMenu.getView(stage));
 //        }
-        if (event.getSource() == topWebcastsButton) {
-            TopWebcastsMenu topWebcastsMenu = new TopWebcastsMenu();
-            stage.setScene(topWebcastsMenu.getView(stage));
-        }
     }
 }

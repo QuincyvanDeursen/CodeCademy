@@ -27,10 +27,10 @@ import java.util.ArrayList;
 public class EnrollmentMenu {
 
 
-    MainMenu menu = new MainMenu();
-    EnrollDAO enrollDAO = new EnrollDAO();
-    StudentDAO studentDAO = new StudentDAO();
-    CourseDAO courseDAO = new CourseDAO();
+    private MainMenu menu = new MainMenu();
+    private EnrollDAO enrollDAO = new EnrollDAO();
+    private StudentDAO studentDAO = new StudentDAO();
+    private CourseDAO courseDAO = new CourseDAO();
 
     public Button backBtn = new Button("Terug");
     private final Button enrollBtn = new Button("Inschrijven");
@@ -75,6 +75,7 @@ public class EnrollmentMenu {
 
 
     private GridPane getButtons(Stage stage) {
+
         GridPane pane = new GridPane();
 
         pane.add(backBtn, 0, 0);
@@ -152,7 +153,7 @@ public class EnrollmentMenu {
 
     private void refreshTable() {
         this.enrollTable.getItems().clear();
-        ArrayList<Enrollment> enrollList = enrollDAO.getStudentList();
+        ArrayList<Enrollment> enrollList = enrollDAO.getEnrollmentList();
         for (Enrollment enrollment : enrollList) {
             this.enrollTable.getItems().add(enrollment);
         }
@@ -166,18 +167,17 @@ public class EnrollmentMenu {
                 dateCol,
                 courseCol
         );
-        showEnrolls();
+        setEnrollmentDataIntoTable();
+        enrollTable.setPrefWidth(400);
+        enrollTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return enrollTable;
     }
 
-    public void showEnrolls() {
-        ArrayList<Enrollment> enrollList = enrollDAO.getStudentList();
-        this.emailCol.setCellValueFactory(enrollmentStringCellDataFeatures ->
-                new SimpleStringProperty(enrollmentStringCellDataFeatures.getValue().getStudent().getEmail()));
+    public void setEnrollmentDataIntoTable() {
+        ArrayList<Enrollment> enrollList = enrollDAO.getEnrollmentList();
+        this.emailCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStudent().getEmail()));
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("RegistrationDate"));
-        this.courseCol.setCellValueFactory(enrollmentStringCellDataFeatures ->
-                new SimpleStringProperty(enrollmentStringCellDataFeatures.getValue().getCourse().getCourseName()));
-
+        this.courseCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCourse().getCourseName()));
         for (Enrollment enrollment : enrollList) {
             this.enrollTable.getItems().add(enrollment);
         }

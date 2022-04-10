@@ -12,7 +12,7 @@ public class EnrollDAO {
     private StudentDAO studentDAO = new StudentDAO();
     private CourseDAO courseDAO = new CourseDAO();
 
-    public ArrayList<Enrollment> getStudentList() {
+    public ArrayList<Enrollment> getEnrollmentList() {
         ArrayList<Enrollment> enrollmentList = new ArrayList<>();
         String query = "select Email, CourseName, RegistrationDate from Enrollment";
 

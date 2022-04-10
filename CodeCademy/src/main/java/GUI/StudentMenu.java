@@ -280,8 +280,7 @@ public class StudentMenu {
         this.streetCol.setCellValueFactory(new PropertyValueFactory<>("Street"));
         this.houseNrCol.setCellValueFactory(new PropertyValueFactory<>("HouseNr"));
         this.countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
-        for (Student student:
-             studentList) {
+        for (Student student: studentList) {
             this.studentTable.getItems().add(student);
         }
     }
