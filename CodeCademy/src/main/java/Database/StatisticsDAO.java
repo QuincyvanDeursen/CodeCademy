@@ -155,7 +155,7 @@ public class StatisticsDAO {
         try {
              conn = DBConnection.getConnection();
              stmt = conn.prepareStatement(query);
-             rs = stmt.executeQuery(query);
+             rs = stmt.executeQuery();
             while (rs.next()) {
                 top3Webcast.add(rs.getString(1));
             }
@@ -183,7 +183,7 @@ public class StatisticsDAO {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             stmt.setString(1, courseName);
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery();
 
             if (rs.next()) {
                 total = rs.getInt(1);
