@@ -18,13 +18,13 @@ public class CourseCompletedStats {
     private StatisticsDAO getStatsData = new StatisticsDAO();
     private CourseDAO courseDAO = new CourseDAO();
 
-    private Text title = new Text("Courses completed!");
+    private Text title = new Text("Cursussen behaald!");
 
     private ComboBox comboBoxSelectedCourse = new ComboBox<>();
 
     private Button checkButton = new Button("Check");
 
-    private Text returningResult = new Text("Amount of students completing the course: ");
+    private Text returningResult = new Text("Aantal studenten die de curses hebben gehaald: ");
 
     public BorderPane getPane () {
 
@@ -51,9 +51,9 @@ public class CourseCompletedStats {
         getContext.add(this.checkButton,0,2);
         this.checkButton.setOnAction(actionEvent -> {
             if (getStatsData.getAmountOfCourseCompleted(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString()) == -1 ) {
-                returningResult.setText("Amount of students completing the course: No one completed this course yet!");
+                returningResult.setText("Aantal studenten die de cursus hebben gehaald: Niemand heeft deze cursus nog gehaald!");
             } else {
-                this.returningResult.setText("Amount of students completing the course: '" +
+                this.returningResult.setText("Aantal studenten die de cursus hebben gehaald: '" +
                         comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString() +
                         "' is: " + getStatsData.getAmountOfCourseCompleted(comboBoxSelectedCourse.getValue().toString())
                 );
@@ -61,7 +61,7 @@ public class CourseCompletedStats {
         });
 
 
-        getContext.add(new Text("Select a course!"),0,0);
+        getContext.add(new Text("Selecteer een cursus!"),0,0);
         getContext.add(returningResult,0,3);
 
         getContext.setHgap(25);
