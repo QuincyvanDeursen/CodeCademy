@@ -26,9 +26,9 @@ public class StatisticsDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -137,9 +137,9 @@ public class StatisticsDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -164,9 +164,9 @@ public class StatisticsDAO {
             e.printStackTrace();
         }
         finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -193,9 +193,9 @@ public class StatisticsDAO {
             throwables.printStackTrace();
         }
         finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return total;
     }
@@ -212,7 +212,7 @@ public class StatisticsDAO {
             ArrayList<String> courseList = new ArrayList<>();
              conn = DBConnection.getConnection();
              stmt = conn.prepareStatement(query);
-             rs = stmt.executeQuery(query);
+             rs = stmt.executeQuery();
             while (rs.next()) {
                 courseList.add(rs.getString(1));
             }
@@ -221,9 +221,9 @@ public class StatisticsDAO {
             throwables.printStackTrace();
         }
         finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }
