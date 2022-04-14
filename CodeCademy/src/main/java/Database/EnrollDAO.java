@@ -31,11 +31,9 @@ public class EnrollDAO {
                         rs.getDate("RegistrationDate").toLocalDate()
                 );
                 enrollmentList.add(enrollment);
-                System.out.println("Enrollment object total: " + enrollmentList.size());
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("getStudentList");
         } finally {
             try {
                 if (rs != null) rs.close();

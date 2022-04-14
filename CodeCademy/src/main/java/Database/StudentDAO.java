@@ -178,7 +178,6 @@ public class StudentDAO {
 
             // Check if there is a result in the set
             if(rs.next()){
-                System.out.println("Student object is being made");
                 return new Student(
                         rs.getString("Email"),
                         rs.getString("Name"),

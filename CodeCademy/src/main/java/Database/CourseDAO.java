@@ -22,7 +22,6 @@ public class CourseDAO {
             stmt.setString(1,courseName);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                System.out.println("Course object being made");
                 return new Course(
                         rs.getString("CourseName"),
                         rs.getString("Topic"),
