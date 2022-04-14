@@ -1,7 +1,7 @@
 package GUI.StatisticViews;
 
 import Database.CourseDAO;
-import Database.EnrollDAO;
+import Database.EnrollmentDAO;
 import Domain.Course;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 public class CourseCompletedView {
 
     private CourseDAO courseDAO = new CourseDAO();
-    private EnrollDAO enrollDAO = new EnrollDAO();
+    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
 
     private Text title = new Text("Cursussen behaald!");
 

@@ -1,16 +1,19 @@
 package Database;
 
+import Domain.ContentItem;
 import Domain.Enrollment;
+import Domain.Progress;
 
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class EnrollDAO {
+public class EnrollmentDAO {
 
     private StudentDAO studentDAO = new StudentDAO();
     private CourseDAO courseDAO = new CourseDAO();
+    private ProgressDAO progressDAO = new ProgressDAO();
 
     public ArrayList<Enrollment> getEnrollmentList() {
         ArrayList<Enrollment> enrollmentList = new ArrayList<>();
@@ -63,6 +66,7 @@ public class EnrollDAO {
         );
 
         try {
+            //inserting enrollment record
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             stmt.setString(1, enrollment.getRegistrationDate().toString());
@@ -70,6 +74,13 @@ public class EnrollDAO {
             stmt.setString(3, course);
             stmt.setString(4, mail);
             stmt.executeUpdate();
+
+            //inserting progress records for the corresponding enrollment with 0% progress.
+            for (ContentItem c :enrollment.getCourse().getContentItems()) {
+                progressDAO.createProgressRecord(
+                        new Progress(enrollment.getRegistrationDate(), enrollment.getStudent(), c, 0));
+
+            }
 
 
             return true;

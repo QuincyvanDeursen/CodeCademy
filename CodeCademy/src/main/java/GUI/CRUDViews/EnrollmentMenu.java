@@ -1,26 +1,23 @@
 package GUI.CRUDViews;
 
 import Database.CourseDAO;
-import Database.EnrollDAO;
+import Database.EnrollmentDAO;
 import Database.StudentDAO;
 import Domain.Course;
 import Domain.Enrollment;
 import Domain.Student;
 import GUI.MainMenu;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class EnrollmentMenu {
 
 
     private MainMenu menu = new MainMenu();
-    private EnrollDAO enrollDAO = new EnrollDAO();
+    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
     private StudentDAO studentDAO = new StudentDAO();
     private CourseDAO courseDAO = new CourseDAO();
 

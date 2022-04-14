@@ -1,6 +1,6 @@
 package GUI.StatisticViews;
 
-import Database.EnrollDAO;
+import Database.EnrollmentDAO;
 import Database.ProgressDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class StudentProgressModuleView {
-    private EnrollDAO enrollDAO = new EnrollDAO();
+    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
     private ProgressDAO progressDAO = new ProgressDAO();
     private Text title = new Text("Student module progressie!");
     private ComboBox comboBoxSelectedEmail = new ComboBox<>();

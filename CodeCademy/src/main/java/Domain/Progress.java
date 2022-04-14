@@ -1,12 +1,16 @@
 package Domain;
 
+import java.time.LocalDate;
+
 public class Progress {
+    private LocalDate localDate;
     private Student student;
     private ContentItem contentItem;
     private int percentage;
 
     //Constructor
-    public Progress(Student student, ContentItem contentItem, int percentage) {
+    public Progress(LocalDate localDate, Student student, ContentItem contentItem, int percentage) {
+        this.localDate = localDate;
         this.student = student;
         this.contentItem = contentItem;
         this.percentage = percentage;
@@ -35,5 +39,13 @@ public class Progress {
 
     public void setPercentage(int percentage) {
         this.percentage = percentage;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 }

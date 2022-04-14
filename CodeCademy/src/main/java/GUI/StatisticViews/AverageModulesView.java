@@ -1,6 +1,6 @@
 package GUI.StatisticViews;
 
-import Database.EnrollDAO;
+import Database.EnrollmentDAO;
 import Database.ProgressDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class AverageModulesView {
     private ProgressDAO progressDAO = new ProgressDAO();
-    private EnrollDAO enrollDAO = new EnrollDAO();
+    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
     private Text title = new Text("Gemiddelde Module progressie!");
     private ComboBox comboBoxSelectedCourse = new ComboBox<>();
     private Button checkButton = new Button("Check");
