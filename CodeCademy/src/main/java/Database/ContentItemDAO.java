@@ -3,10 +3,7 @@ package Database;
 import Domain.*;
 import Domain.Module;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ContentItemDAO {
@@ -109,6 +106,32 @@ public class ContentItemDAO {
         cItems.addAll(getWebcastsForCourse(courseName));
 
         return cItems;
+    }
+
+    //Get top 3 most viewed webcasts (view5)
+    public ArrayList<String> getTopThreeWebcast() {
+        ArrayList<String> top3Webcast = new ArrayList<>();
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        String query = "SELECT TOP 3 Webcast.Title, SUM(Progression) AS totalPercentageWatched From Progress JOIN ContentItem ON ContentItem.ContentID = Progress.ContentID JOIN Webcast ON ContentItem.WebcastTitle = Webcast.Title WHERE ContentItem.WebcastTitle IS NOT NULL GROUP BY Webcast.Title ORDER BY  totalPercentageWatched DESC";
+        try {
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                top3Webcast.add(rs.getString(1));
+            }
+            return top3Webcast;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+        return null;
     }
 
 }

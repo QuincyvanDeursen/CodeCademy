@@ -1,6 +1,7 @@
 package GUI.StatisticViews;
 
-import Database.StatisticsDAO;
+import Database.EnrollDAO;
+import Database.ProgressDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -13,7 +14,8 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class StudentProgressModuleView {
-    private StatisticsDAO getStatsData = new StatisticsDAO();
+    private EnrollDAO enrollDAO = new EnrollDAO();
+    private ProgressDAO progressDAO = new ProgressDAO();
     private Text title = new Text("Student module progressie!");
     private ComboBox comboBoxSelectedEmail = new ComboBox<>();
     private ComboBox comboBoxSelectedCourse = new ComboBox<>();
@@ -45,7 +47,7 @@ public class StudentProgressModuleView {
         getContext.add(comboBoxSelectedEmail, 0, 1);
         comboBoxSelectedEmail.setPrefWidth(150);
         comboBoxSelectedEmail.getItems().clear();
-        for (String enrolls : getStatsData.getEnrolledAccount()) {
+        for (String enrolls : enrollDAO.getDistinctEnrolledEmails()) {
             comboBoxSelectedEmail.getItems().add(enrolls);
         }
 
@@ -66,7 +68,7 @@ public class StudentProgressModuleView {
     private void buttonSetOnActionResult() {
 
         this.showModulesButton.setOnAction(actionEvent -> {
-            for (String course: getStatsData.getCoursesFromEnrolledStudent(comboBoxSelectedEmail.getSelectionModel().getSelectedItem().toString())) {
+            for (String course: enrollDAO.getCourseNamesFromEnrolledStudent(comboBoxSelectedEmail.getSelectionModel().getSelectedItem().toString())) {
                 comboBoxSelectedCourse.getItems().add(course);
             }
             this.comboBoxSelectedCourse.setVisible(true);
@@ -76,7 +78,7 @@ public class StudentProgressModuleView {
 
 
         this.checkButton.setOnAction(actionEvent -> {
-            listWithProgressDataFromOneStudent = getStatsData.getModuleProgression(comboBoxSelectedEmail.getSelectionModel().getSelectedItem().toString(), comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString());
+            listWithProgressDataFromOneStudent = progressDAO.getModuleProgression(comboBoxSelectedEmail.getSelectionModel().getSelectedItem().toString(), comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString());
             if ( listWithProgressDataFromOneStudent.size() == 0) {
                 Alert warningAlert = new Alert(Alert.AlertType.ERROR);
                 warningAlert.setContentText("Deze student is nog niet aan modules begonnen in deze cursus!");

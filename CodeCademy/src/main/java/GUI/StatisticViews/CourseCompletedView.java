@@ -1,7 +1,7 @@
 package GUI.StatisticViews;
 
 import Database.CourseDAO;
-import Database.StatisticsDAO;
+import Database.EnrollDAO;
 import Domain.Course;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -13,8 +13,8 @@ import javafx.scene.text.Text;
 
 public class CourseCompletedView {
 
-    private StatisticsDAO getStatsData = new StatisticsDAO();
     private CourseDAO courseDAO = new CourseDAO();
+    private EnrollDAO enrollDAO = new EnrollDAO();
 
     private Text title = new Text("Cursussen behaald!");
 
@@ -48,12 +48,12 @@ public class CourseCompletedView {
         }
         getContext.add(this.checkButton,0,2);
         this.checkButton.setOnAction(actionEvent -> {
-            if (getStatsData.getAmountOfCourseCompleted(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString()) == -1 ) {
+            if (enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString()) == -1 ) {
                 returningResult.setText("Aantal studenten die de cursus hebben gehaald: Niemand heeft deze cursus nog gehaald!");
             } else {
                 this.returningResult.setText("Aantal studenten die de cursus hebben gehaald: '" +
                         comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString() +
-                        "' is: " + getStatsData.getAmountOfCourseCompleted(comboBoxSelectedCourse.getValue().toString())
+                        "' is: " + enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getValue().toString())
                 );
             }
         });

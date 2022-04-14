@@ -1,6 +1,7 @@
 package GUI.StatisticViews;
 
-import Database.StatisticsDAO;
+import Database.EnrollDAO;
+import Database.ProgressDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -12,7 +13,8 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class AverageModulesView {
-    private StatisticsDAO getStatsData = new StatisticsDAO();
+    private ProgressDAO progressDAO = new ProgressDAO();
+    private EnrollDAO enrollDAO = new EnrollDAO();
     private Text title = new Text("Gemiddelde Module progressie!");
     private ComboBox comboBoxSelectedCourse = new ComboBox<>();
     private Button checkButton = new Button("Check");
@@ -37,7 +39,7 @@ public class AverageModulesView {
         getContext.add(comboBoxSelectedCourse, 0, 1);
         comboBoxSelectedCourse.setPrefWidth(150);
         comboBoxSelectedCourse.getItems().clear();
-        for (String course : getStatsData.getCourses()) {
+        for (String course : enrollDAO.getDistinctEnrolledCourseNames()) {
             comboBoxSelectedCourse.getItems().add(course);
         }
         getContext.add(this.checkButton, 0, 2);
@@ -54,8 +56,8 @@ public class AverageModulesView {
 
     private void buttonSetOnActionResult() {
         this.checkButton.setOnAction(actionEvent -> {
-            listWithAverageData = getStatsData.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString());
-            if (getStatsData.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().toString()) == null) {
+            listWithAverageData = progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString());
+            if (progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().toString()) == null) {
                 returningResult.setText("Gemiddelde progressie modules van de cursus: Hier is geen data van");
             } else {
                 this.returningResult.setText("Gemiddelde progressie modules van de cursus: " +

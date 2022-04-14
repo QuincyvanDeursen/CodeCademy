@@ -1,6 +1,6 @@
 package GUI.StatisticViews;
 
-import Database.StatisticsDAO;
+import Database.ContentItemDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 
 public class Top3WebcastsView {
-    StatisticsDAO getStatsData = new StatisticsDAO();
-
+    ContentItemDAO contentItemDAO = new ContentItemDAO();
     Text title = new Text("Top 3 Webcasts");
     Text firstPlace = new Text("1. ");
     Text secondPlace = new Text("2. ");
@@ -45,7 +44,7 @@ public class Top3WebcastsView {
     }
 
     private void applyTopThreeToText() {
-        topWebcastsList = getStatsData.getTopThreeWebcast();
+        topWebcastsList = contentItemDAO.getTopThreeWebcast();
 
         firstPlace.setText("1. " + topWebcastsList.get(0));
         secondPlace.setText("2. " + topWebcastsList.get(1));

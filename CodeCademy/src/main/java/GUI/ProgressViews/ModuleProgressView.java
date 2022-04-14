@@ -1,6 +1,5 @@
 package GUI.ProgressViews;
 
-import Database.StatisticsDAO;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -8,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 
 public class ModuleProgressView implements EventHandler {
     private Label title = new Label("Update de voortgang van een module van een student.");

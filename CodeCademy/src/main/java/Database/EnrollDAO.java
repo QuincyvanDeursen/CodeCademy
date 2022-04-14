@@ -141,4 +141,115 @@ public class EnrollDAO {
         }
         return false;
     }
+
+    //method below returns each course a given student is enrolled for.
+    //This method is used to show the courses a student is enrolled for in a dropdown list.
+    public ArrayList<String> getCourseNamesFromEnrolledStudent(String email) {
+        String query = "SELECT DISTINCT CourseName FROM Enrollment WHERE Email = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            ArrayList<String> courseNames = new ArrayList<>();
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1,email);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                courseNames.add(rs.getString(1));
+            }
+            return courseNames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return null;
+    }
+
+    //method below returns a list of distinct emails from enrolled students.
+    //This method is used to show the enrolled students in a dropdown list.
+    public ArrayList<String> getDistinctEnrolledEmails() {
+        String query = "SELECT DISTINCT Email FROM Enrollment";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            ArrayList<String> emailsOfEnrolledStudents = new ArrayList<>();
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                emailsOfEnrolledStudents.add(rs.getString(1));
+            }
+            return emailsOfEnrolledStudents;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+        return null;
+    }
+
+    //For a given course show how many students completed the course. (view8)
+    //This method returns the amount of enrollments for which a certificate has been as
+    public int getAmountOfCourseCompleted(String courseName) {
+        String query = "SELECT COUNT(CertificateID) AS Completed FROM Enrollment WHERE CertificateID IS NOT NULL AND CourseName = ? GROUP BY CourseName";
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        int total = -1;
+        try {
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, courseName);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+            return  total;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+        return total;
+    }
+
+    //This method retrieves the course names which have enrolments (view 8).
+    public ArrayList<String> getDistinctEnrolledCourseNames() {
+        String query = "SELECT DISTINCT CourseName FROM Enrollment";
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+
+        try {
+            ArrayList<String> courseList = new ArrayList<>();
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                courseList.add(rs.getString(1));
+            }
+            return courseList;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+        return null;
+    }
 }
