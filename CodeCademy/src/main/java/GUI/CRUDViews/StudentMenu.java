@@ -1,9 +1,10 @@
-package GUI;
+package GUI.CRUDViews;
 
 import Domain.Gender;
 import Domain.Student;
 import Database.StudentDAO;
 
+import GUI.MainMenu;
 import InputVerification.DateTools;
 import InputVerification.MailTools;
 import InputVerification.PostalCode;

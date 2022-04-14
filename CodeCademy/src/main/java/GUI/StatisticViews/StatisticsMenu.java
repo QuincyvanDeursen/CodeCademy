@@ -1,5 +1,6 @@
-package GUI;
+package GUI.StatisticViews;
 
+import GUI.MainMenu;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,9 +12,9 @@ public class StatisticsMenu {
     private MainMenu mainMenu = new MainMenu();
 
     private Button topWebcasts = new Button("Top 3 Webcasts");
-    private Button averageModuleProgress = new Button(" Average Module");
-    private Button studentModuleProgress = new Button("Student Module");
-    private Button courseCompleteAmount = new Button("Course Complete");
+    private Button averageModuleProgress = new Button("Module Voortgang");
+    private Button studentModuleProgress = new Button("Student Voortgang");
+    private Button courseCompleteAmount = new Button("Behaalde Cursussen");
     public Button backBtn = new Button("Terug");
 
 //     creates a view
@@ -33,22 +34,22 @@ public class StatisticsMenu {
         this.backBtn.setOnAction(actionEvent -> stage.setScene(mainMenu.getView(stage)));
 
         this.topWebcasts.setOnAction(actionEvent -> {
-            TopWebcastsStats topWebcasts = new TopWebcastsStats();
+            Top3WebcastsView topWebcasts = new Top3WebcastsView();
             mainPane.setCenter(topWebcasts.getPane());
         });
 
         this.averageModuleProgress.setOnAction(actionEvent -> {
-            AverageModulesStats averageModulesStats = new AverageModulesStats();
+            AverageModulesView averageModulesStats = new AverageModulesView();
             mainPane.setCenter(averageModulesStats.getPane());
         });
 
         this.studentModuleProgress.setOnAction(actionEvent -> {
-            StudentProgressModuleStats studentProgressModuleStats = new StudentProgressModuleStats();
+            StudentProgressModuleView studentProgressModuleStats = new StudentProgressModuleView();
             mainPane.setCenter(studentProgressModuleStats.getPane());
         });
 
         this.courseCompleteAmount.setOnAction(actionEvent -> {
-            CourseCompletedStats courseCompletedStats = new CourseCompletedStats();
+            CourseCompletedView courseCompletedStats = new CourseCompletedView();
             mainPane.setCenter(courseCompletedStats.getPane());
         });
     }

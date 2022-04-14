@@ -1,4 +1,4 @@
-package GUI;
+package GUI.StatisticViews;
 
 import Database.StatisticsDAO;
 import javafx.geometry.Insets;
@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class StudentProgressModuleStats {
+public class StudentProgressModuleView {
     private StatisticsDAO getStatsData = new StatisticsDAO();
     private Text title = new Text("Student module progressie!");
     private ComboBox comboBoxSelectedEmail = new ComboBox<>();

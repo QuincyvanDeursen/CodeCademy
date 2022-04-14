@@ -1,4 +1,4 @@
-package GUI;
+package GUI.StatisticViews;
 
 import Database.StatisticsDAO;
 import javafx.geometry.Insets;
@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class AverageModulesStats {
+public class AverageModulesView {
     private StatisticsDAO getStatsData = new StatisticsDAO();
     private Text title = new Text("Gemiddelde Module progressie!");
     private ComboBox comboBoxSelectedCourse = new ComboBox<>();

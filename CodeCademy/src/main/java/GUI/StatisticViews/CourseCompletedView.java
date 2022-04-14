@@ -1,4 +1,4 @@
-package GUI;
+package GUI.StatisticViews;
 
 import Database.CourseDAO;
 import Database.StatisticsDAO;
@@ -11,9 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-
-public class CourseCompletedStats {
+public class CourseCompletedView {
 
     private StatisticsDAO getStatsData = new StatisticsDAO();
     private CourseDAO courseDAO = new CourseDAO();

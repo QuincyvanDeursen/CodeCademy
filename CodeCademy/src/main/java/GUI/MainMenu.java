@@ -1,6 +1,9 @@
 package GUI;
 
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+import GUI.CRUDViews.EnrollmentMenu;
+import GUI.CRUDViews.StudentMenu;
+import GUI.ProgressViews.ProgressMenu;
+import GUI.StatisticViews.StatisticsMenu;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,20 +14,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.util.concurrent.Flow;
 
 public class MainMenu extends Application implements EventHandler {
 
     private Label crudLabel = new Label("CRUD");
     private Label statisticsLabel = new Label("Statistieken");
+    private Label progressLabel = new Label("Update Voortgang");
     private Button studentButton = new Button("Cursisten");
     private Button enrollButton = new Button("Inschrijvingen");
     private Button statisticsButton = new Button("Statistieken");
+    private Button progressButton = new Button("Voortgang");
     private Stage stage;
 
 
@@ -45,15 +45,18 @@ public class MainMenu extends Application implements EventHandler {
         setButtonStyling(this.enrollButton);
         setButtonStyling(this.studentButton);
         setButtonStyling(this.statisticsButton);
+        setButtonStyling(this.progressButton);
+        setLabelStyling(this.progressLabel);
         setLabelStyling(this.crudLabel);
         setLabelStyling(this.statisticsLabel);
 
         this.enrollButton.setOnAction(this::handle);
         this.studentButton.setOnAction(this::handle);
         this.statisticsButton.setOnAction(this::handle);
+        this.progressButton.setOnAction(this::handle);
 
 
-        Scene scene = new Scene(flowPane, 250, 550);
+        Scene scene = new Scene(flowPane, 250, 700);
         return scene;
     }
 
@@ -61,7 +64,7 @@ public class MainMenu extends Application implements EventHandler {
     private FlowPane getMainPane(Stage window) {
         FlowPane flowPane = new FlowPane(Orientation.VERTICAL);
         flowPane.setColumnHalignment(HPos.CENTER);
-        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton);
+        flowPane.getChildren().addAll(crudLabel, studentButton, enrollButton, statisticsLabel, statisticsButton, progressLabel, progressButton);
         return flowPane;
     }
 
@@ -106,6 +109,11 @@ public class MainMenu extends Application implements EventHandler {
         if (event.getSource() == statisticsButton){
              StatisticsMenu statisticsMenu = new StatisticsMenu();
             stage.setScene(statisticsMenu.getView(stage));
+        }
+
+        if (event.getSource() == progressButton){
+            ProgressMenu progressMenu = new ProgressMenu();
+            stage.setScene(progressMenu.getView(stage));
         }
     }
 }

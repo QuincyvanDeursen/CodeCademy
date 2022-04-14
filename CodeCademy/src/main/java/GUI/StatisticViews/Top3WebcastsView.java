@@ -1,4 +1,4 @@
-package GUI;
+package GUI.StatisticViews;
 
 import Database.StatisticsDAO;
 import javafx.geometry.Insets;
@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 
-public class TopWebcastsStats {
+public class Top3WebcastsView {
     StatisticsDAO getStatsData = new StatisticsDAO();
 
     Text title = new Text("Top 3 Webcasts");

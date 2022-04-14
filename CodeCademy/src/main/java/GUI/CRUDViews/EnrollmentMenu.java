@@ -1,4 +1,4 @@
-package GUI;
+package GUI.CRUDViews;
 
 import Database.CourseDAO;
 import Database.EnrollDAO;
@@ -6,6 +6,7 @@ import Database.StudentDAO;
 import Domain.Course;
 import Domain.Enrollment;
 import Domain.Student;
+import GUI.MainMenu;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -33,7 +34,7 @@ public class EnrollmentMenu {
     private CourseDAO courseDAO = new CourseDAO();
 
     public Button backBtn = new Button("Terug");
-    private final Label introText = new Label("Schrijf je in!");
+    private final Label introText = new Label("Schrijf een student in!");
 
     private final Label mailText = new Label("* email: ");
     private final TextField mailTextField = new TextField();
