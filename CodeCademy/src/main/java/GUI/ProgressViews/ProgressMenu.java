@@ -1,8 +1,6 @@
 package GUI.ProgressViews;
 
 import GUI.MainMenu;
-import GUI.StatisticViews.CourseCompletedView;
-import GUI.StatisticViews.StudentProgressModuleView;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,8 +30,8 @@ public class ProgressMenu {
         this.backBtn.setOnAction(actionEvent -> stage.setScene(mainMenu.getView(stage)));
 
         this.webcastProgress.setOnAction(actionEvent -> {
-            CourseCompletedView courseCompletedStats = new CourseCompletedView();
-            mainPane.setCenter(courseCompletedStats.getPane());
+            WebcastProgressView webcastProgressView = new WebcastProgressView();
+            mainPane.setCenter(webcastProgressView.getPane());
 
         });
 

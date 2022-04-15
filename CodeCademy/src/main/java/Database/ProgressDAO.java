@@ -36,6 +36,29 @@ public class ProgressDAO {
         }
     }
 
+    public boolean updateProgress(Progress progress){
+        String query = "UPDATE Progress SET Progression = ?, UpdateDate = ? WHERE Email = ? AND ContentID = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, progress.getPercentage());
+            stmt.setString(2, progress.getLocalDate().toString());
+            stmt.setString(3, progress.getStudent().getEmail());
+            stmt.setInt(4, progress.getContentItem().getID());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally{
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return false;
+    }
+
 
     //For a selected course give the average progression in percentage  of the total length for each module of all students. (view2)
     public ArrayList<String> getAverageProgressionOfAllModulesFromCourse(Course course){
