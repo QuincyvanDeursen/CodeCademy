@@ -70,7 +70,7 @@ public class StudentProgressModuleView {
     private void buttonSetOnActionResult() {
 
         this.showModulesButton.setOnAction(actionEvent -> {
-            for (Course course: enrollDAO.getCoursesOfEnrolledStudent(comboBoxStudent.getSelectionModel().getSelectedItem().getEmail())) {
+            for (Course course: enrollDAO.getCoursesOfEnrolledStudent(comboBoxStudent.getValue())) {
                 comboBoxCourse.getItems().add(course);
             }
             this.comboBoxCourse.setVisible(true);

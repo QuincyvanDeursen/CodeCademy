@@ -108,7 +108,7 @@ public class WebcastProgressView implements EventHandler {
             warningMessage("Selecteer eerst een email.");
             return;
         }
-        for (Course course: enrollmentDAO.getCoursesOfEnrolledStudent(this.comboBoxStudent.getValue().getEmail())){
+        for (Course course: enrollmentDAO.getCoursesOfEnrolledStudent(this.comboBoxStudent.getValue())){
             this.comboBoxCourse.getItems().add(course);
         }
 

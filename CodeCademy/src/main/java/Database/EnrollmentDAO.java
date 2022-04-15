@@ -68,7 +68,7 @@ public class EnrollmentDAO {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             stmt.setString(1, enrollment.getRegistrationDate().toString());
-            stmt.setNull(2, 0);
+            stmt.setInt(2, 0);
             stmt.setString(3, course);
             stmt.setString(4, mail);
             stmt.executeUpdate();
@@ -153,7 +153,7 @@ public class EnrollmentDAO {
 
     //method below returns each course a given student is enrolled for.
     //This method is used to show the courses a student is enrolled for in a dropdown list.
-    public ArrayList<Course> getCoursesOfEnrolledStudent(String email) {
+    public ArrayList<Course> getCoursesOfEnrolledStudent(Student student) {
         String query = "SELECT DISTINCT CourseName FROM Enrollment WHERE Email = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -162,7 +162,7 @@ public class EnrollmentDAO {
             ArrayList<Course> courses = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1,email);
+            stmt.setString(1,student.getEmail());
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Course course = courseDAO.readCourse(rs.getString(1));
@@ -209,8 +209,8 @@ public class EnrollmentDAO {
 
     //For a given course show how many students completed the course. (view8)
     //This method returns the amount of enrollments for which a certificate has been as
-    public int getAmountOfCourseCompleted(String courseName) {
-        String query = "SELECT COUNT(CertificateID) AS Completed FROM Enrollment WHERE CertificateID IS NOT NULL AND CourseName = ? GROUP BY CourseName";
+    public int getAmountOfCourseCompleted(Course course) {
+        String query = "SELECT COUNT(CertificateID) AS Completed FROM Enrollment WHERE CertificateID = 1 AND CourseName = ? GROUP BY CourseName";
         PreparedStatement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
@@ -218,7 +218,7 @@ public class EnrollmentDAO {
         try {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, courseName);
+            stmt.setString(1, course.getCourseName());
             rs = stmt.executeQuery();
 
             if (rs.next()) {

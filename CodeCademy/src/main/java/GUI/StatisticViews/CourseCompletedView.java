@@ -18,7 +18,7 @@ public class CourseCompletedView {
 
     private Text title = new Text("Cursussen behaald!");
 
-    private ComboBox comboBoxSelectedCourse = new ComboBox<>();
+    private ComboBox<Course> comboBoxSelectedCourse = new ComboBox<>();
 
     private Button checkButton = new Button("Check");
 
@@ -44,16 +44,16 @@ public class CourseCompletedView {
         comboBoxSelectedCourse.setPrefWidth(150);
         comboBoxSelectedCourse.getItems().clear();
         for (Course course : courseDAO.getCourseList()) {
-            comboBoxSelectedCourse.getItems().add(course.getCourseName());
+            comboBoxSelectedCourse.getItems().add(course);
         }
         getContext.add(this.checkButton,0,2);
         this.checkButton.setOnAction(actionEvent -> {
-            if (enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString()) == -1 ) {
+            if (enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getSelectionModel().getSelectedItem()) == -1 ) {
                 returningResult.setText("Aantal studenten die de cursus hebben gehaald: Niemand heeft deze cursus nog gehaald!");
             } else {
                 this.returningResult.setText("Aantal studenten die de cursus hebben gehaald: '" +
                         comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString() +
-                        "' is: " + enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getValue().toString())
+                        "' is: " + enrollDAO.getAmountOfCourseCompleted(comboBoxSelectedCourse.getValue())
                 );
             }
         });
