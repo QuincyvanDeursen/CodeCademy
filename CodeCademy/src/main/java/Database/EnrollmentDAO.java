@@ -1,8 +1,6 @@
 package Database;
 
-import Domain.ContentItem;
-import Domain.Enrollment;
-import Domain.Progress;
+import Domain.*;
 
 
 import java.sql.*;
@@ -155,21 +153,22 @@ public class EnrollmentDAO {
 
     //method below returns each course a given student is enrolled for.
     //This method is used to show the courses a student is enrolled for in a dropdown list.
-    public ArrayList<String> getCourseNamesFromEnrolledStudent(String email) {
+    public ArrayList<Course> getCoursesOfEnrolledStudent(String email) {
         String query = "SELECT DISTINCT CourseName FROM Enrollment WHERE Email = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            ArrayList<String> courseNames = new ArrayList<>();
+            ArrayList<Course> courses = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             stmt.setString(1,email);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                courseNames.add(rs.getString(1));
+                Course course = courseDAO.readCourse(rs.getString(1));
+                courses.add(course);
             }
-            return courseNames;
+            return courses;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -183,18 +182,18 @@ public class EnrollmentDAO {
 
     //method below returns a list of distinct emails from enrolled students.
     //This method is used to show the enrolled students in a dropdown list.
-    public ArrayList<String> getDistinctEnrolledEmails() {
+    public ArrayList<Student> getDistinctEnrolledStudents() {
         String query = "SELECT DISTINCT Email FROM Enrollment";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            ArrayList<String> emailsOfEnrolledStudents = new ArrayList<>();
+            ArrayList<Student> emailsOfEnrolledStudents = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                emailsOfEnrolledStudents.add(rs.getString(1));
+                emailsOfEnrolledStudents.add( studentDAO.readStudent(rs.getString(1)));
             }
             return emailsOfEnrolledStudents;
         } catch (SQLException e) {
@@ -238,19 +237,20 @@ public class EnrollmentDAO {
     }
 
     //This method retrieves the course names which have enrolments (view 8).
-    public ArrayList<String> getDistinctEnrolledCourseNames() {
+    public ArrayList<Course> getDistinctEnrolledCourses() {
         String query = "SELECT DISTINCT CourseName FROM Enrollment";
         PreparedStatement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
 
         try {
-            ArrayList<String> courseList = new ArrayList<>();
+            ArrayList<Course> courseList = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                courseList.add(rs.getString(1));
+                Course course = courseDAO.readCourse(rs.getString(1));
+                courseList.add(course);
             }
             return courseList;
         } catch (SQLException throwables) {

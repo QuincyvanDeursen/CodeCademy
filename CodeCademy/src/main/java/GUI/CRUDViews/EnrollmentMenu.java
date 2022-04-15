@@ -59,6 +59,7 @@ public class EnrollmentMenu {
 
     public Scene getView(Stage stage) {
         BorderPane mainPane = new BorderPane();
+        mainPane.setStyle("-fx-background-color: #FAF3DC;");
         mainPane.setPadding(new Insets(25, 25, 25, 25));
         GridPane userInputPane = getContent();
         GridPane buttonsPane = getButtons(stage);

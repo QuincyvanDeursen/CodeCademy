@@ -1,5 +1,6 @@
 package Database;
 
+import Domain.Course;
 import Domain.Progress;
 import Domain.Student;
 
@@ -37,7 +38,7 @@ public class ProgressDAO {
 
 
     //For a selected course give the average progression in percentage  of the total length for each module of all students. (view2)
-    public ArrayList<String> getAverageProgressionOfAllModulesFromCourse(String course){
+    public ArrayList<String> getAverageProgressionOfAllModulesFromCourse(Course course){
         String query = "SELECT ContentItem.ModuleTitle, AVG(Progress.Progression) AS Average FROM Progress JOIN ContentItem ON ContentItem.ContentID = Progress.ContentID JOIN CourseContent ON CourseContent.ContentID = ContentItem.ContentID WHERE ContentItem.ModuleTitle IS NOT null AND CourseContent.CourseName = ? GROUP BY ContentItem.ModuleTitle, CourseContent.CourseName";
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -46,7 +47,7 @@ public class ProgressDAO {
             ArrayList<String> moduleProgression = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, course);
+            stmt.setString(1, course.getCourseName());
             rs = stmt.executeQuery();
             while (rs.next()) {
                 moduleProgression.add(rs.getString(1) +": " + rs.getString(2));
@@ -65,7 +66,7 @@ public class ProgressDAO {
 
     //For a given student and course, give the corresponding progress of each module. (view3)
     //Method below returns a HashMap that contains the name of the module and the progression of the corresponding course and student.
-    public ArrayList<String> getModuleProgression(String email, String courseName) {
+    public ArrayList<String> getModuleProgression(Student student, Course course) {
         String query = "SELECT ModuleTitle, Progression FROM CourseContent Join ContentItem ON ContentItem.ContentID = CourseContent.ContentID Join Progress ON Progress.ContentID = ContentItem.ContentID WHERE Email = ? AND CourseName = ? AND ModuleTitle IS NOT NULL";
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -74,8 +75,8 @@ public class ProgressDAO {
             ArrayList<String> moduleProgression = new ArrayList<>();
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, email);
-            stmt.setString(2, courseName);
+            stmt.setString(1, student.getEmail());
+            stmt.setString(2, course.getCourseName());
             rs = stmt.executeQuery();
             while (rs.next()) {
                 moduleProgression.add(rs.getString(1) +": " + rs.getString(2));

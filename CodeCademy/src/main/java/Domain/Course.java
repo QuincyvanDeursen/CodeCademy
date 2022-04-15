@@ -68,4 +68,9 @@ public class Course {
     public void setContentItems(ArrayList<ContentItem> contentItems) {
         this.contentItems = contentItems;
     }
+
+    @Override
+    public String toString() {
+        return this.getCourseName();
+    }
 }

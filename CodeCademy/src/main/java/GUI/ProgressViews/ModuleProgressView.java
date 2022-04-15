@@ -1,5 +1,12 @@
 package GUI.ProgressViews;
 
+import Database.EnrollmentDAO;
+import Domain.ContentItem;
+import Domain.Course;
+import Domain.Enrollment;
+import Domain.Module;
+import Domain.Student;
+import InputVerification.NumericRangeTool;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,10 +16,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 public class ModuleProgressView implements EventHandler {
+    private EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
     private Label title = new Label("Update de voortgang van een module van een student.");
-    private ComboBox comboBoxStudent = new ComboBox<>();
-    private ComboBox comboBoxCourse = new ComboBox<>();
-    private ComboBox comboBoxModule = new ComboBox<>();
+    private ComboBox<Student> comboBoxStudent = new ComboBox<>();
+    private ComboBox<Course> comboBoxCourse = new ComboBox<>();
+    private ComboBox<ContentItem> comboBoxModule = new ComboBox<>();
     private TextField progressTextField = new TextField();
     private Label selectEmailLabel = new Label("Selecteer een email");
     private Label selectCourseLabel = new Label("Selecteer een cursus");
@@ -51,6 +59,10 @@ public class ModuleProgressView implements EventHandler {
         gridPane.add(setProgressLabel, 1, 6);
         gridPane.add(this.progressTextField, 1, 7);
         gridPane.add(this.updateButton, 0, 7);
+
+        for (Student student: enrollmentDAO.getDistinctEnrolledStudents()) {
+            this.comboBoxStudent.getItems().add(student);
+        }
 
         this.selectCourseLabel.setVisible(false);
         this.comboBoxCourse.setVisible(false);
@@ -92,6 +104,10 @@ public class ModuleProgressView implements EventHandler {
             warningMessage("Selecteer eerst een email.");
             return;
         }
+        for (Course course: enrollmentDAO.getCoursesOfEnrolledStudent(this.comboBoxStudent.getValue().getEmail())){
+            this.comboBoxCourse.getItems().add(course);
+        }
+
         this.comboBoxCourse.setVisible(true);
         this.showModuleButton.setVisible(true);
         return;
@@ -102,6 +118,12 @@ public class ModuleProgressView implements EventHandler {
             warningMessage("Selecteer eerst een cursus.");
             return;
         }
+        for (ContentItem contentItem: this.comboBoxCourse.getValue().getContentItems()){
+            if (contentItem instanceof Module){
+                this.comboBoxModule.getItems().add(contentItem);
+            }
+        }
+
         this.selectModuleLabel.setVisible(true);
         this.comboBoxModule.setVisible(true);
         this.setProgressLabel.setVisible(true);
@@ -115,6 +137,11 @@ public class ModuleProgressView implements EventHandler {
             warningMessage("Selecteer eerst een module.");
             return;
         }
+        if (progressTextField.getText() == null || !NumericRangeTool.isValidPercentage(Integer.parseInt(progressTextField.getText()))){
+            warningMessage("Vul een geldige percentage (0-100) in!");
+            return;
+        }
+
         this.selectCourseLabel.setVisible(false);
         this.comboBoxCourse.setVisible(false);
         this.selectModuleLabel.setVisible(false);

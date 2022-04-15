@@ -84,6 +84,7 @@ public class StudentMenu {
     public  Scene getView(Stage stage) {
         //  Borderpane with styling (parent)
         BorderPane bp = new BorderPane();
+        bp.setStyle("-fx-background-color: #FAF3DC;");
         bp.setPadding(new Insets(25, 25, 25, 25));
 
         //gridpane with styling (child)

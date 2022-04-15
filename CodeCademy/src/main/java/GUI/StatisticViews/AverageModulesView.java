@@ -2,6 +2,7 @@ package GUI.StatisticViews;
 
 import Database.EnrollmentDAO;
 import Database.ProgressDAO;
+import Domain.Course;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class AverageModulesView {
     private ProgressDAO progressDAO = new ProgressDAO();
     private EnrollmentDAO enrollDAO = new EnrollmentDAO();
     private Text title = new Text("Gemiddelde Module progressie!");
-    private ComboBox comboBoxSelectedCourse = new ComboBox<>();
+    private ComboBox<Course> comboBoxCourse = new ComboBox<>();
     private Button checkButton = new Button("Check");
     private Text returningResult = new Text("Gemiddelde progressie modules van de cursus: ");
     ArrayList<String> listWithAverageData = new ArrayList<>();
@@ -36,11 +37,11 @@ public class AverageModulesView {
     private Node getTexts() {
         GridPane getContext = new GridPane();
 
-        getContext.add(comboBoxSelectedCourse, 0, 1);
-        comboBoxSelectedCourse.setPrefWidth(150);
-        comboBoxSelectedCourse.getItems().clear();
-        for (String course : enrollDAO.getDistinctEnrolledCourseNames()) {
-            comboBoxSelectedCourse.getItems().add(course);
+        getContext.add(comboBoxCourse, 0, 1);
+        comboBoxCourse.setPrefWidth(150);
+        comboBoxCourse.getItems().clear();
+        for (Course course : enrollDAO.getDistinctEnrolledCourses()) {
+            comboBoxCourse.getItems().add(course);
         }
         getContext.add(this.checkButton, 0, 2);
         buttonSetOnActionResult();
@@ -56,12 +57,12 @@ public class AverageModulesView {
 
     private void buttonSetOnActionResult() {
         this.checkButton.setOnAction(actionEvent -> {
-            listWithAverageData = progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString());
-            if (progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxSelectedCourse.getSelectionModel().toString()) == null) {
-                returningResult.setText("Gemiddelde progressie modules van de cursus: Hier is geen data van");
+            listWithAverageData = progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxCourse.getSelectionModel().getSelectedItem());
+            if (progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxCourse.getSelectionModel().getSelectedItem()) == null) {
+                returningResult.setText("Gemiddelde progressie van de modulen van een cursus: Hier is geen data van");
             } else {
-                this.returningResult.setText("Gemiddelde progressie modules van de cursus: " +
-                        comboBoxSelectedCourse.getSelectionModel().getSelectedItem().toString() + "\n \n" +
+                this.returningResult.setText("Gemiddelde progressie van de modulen van een cursus: " +
+                        comboBoxCourse.getSelectionModel().getSelectedItem().toString() + "\n \n" +
                         printListWithData()
                 );
             }
