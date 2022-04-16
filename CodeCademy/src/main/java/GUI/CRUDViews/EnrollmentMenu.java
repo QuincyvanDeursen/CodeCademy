@@ -38,8 +38,8 @@ public class EnrollmentMenu {
     private final Label errorMail = new Label("");
 
     private Label courseName = new Label("* cursus: ");
-    private ComboBox comboBoxCourse = new ComboBox();
-    private ComboBox comboBoxMail = new ComboBox();
+    private ComboBox<Course> comboBoxCourse = new ComboBox();
+    private ComboBox<Student> comboBoxStudent = new ComboBox();
     private final Label errorCourse = new Label("");
 
 
@@ -98,8 +98,8 @@ public class EnrollmentMenu {
         try {
             this.enrollTable.setOnMouseClicked(e -> {
                 Enrollment enrollment = enrollTable.getItems().get(enrollTable.getSelectionModel().getSelectedIndex());
-                this.comboBoxMail.setValue(enrollment.getStudent().getEmail());
-                this.comboBoxCourse.setValue(enrollment.getCourse().getCourseName());
+                this.comboBoxStudent.setValue(enrollment.getStudent());
+                this.comboBoxCourse.setValue(enrollment.getCourse());
 
                 this.emailCellValue = enrollment.getStudent().getEmail();
                 this.courseCellValue = enrollment.getCourse().getCourseName();
@@ -117,7 +117,8 @@ public class EnrollmentMenu {
                 warning.setContentText("Er is geen record geselecteerd om te updaten.");
                 warning.show();
             } else {
-                enrollDAO.updateRecord(comboBoxMail.getValue().toString(), comboBoxCourse.getValue().toString(), this.emailCellValue, this.courseCellValue);
+                Enrollment enrollment = new Enrollment(comboBoxStudent.getValue(), comboBoxCourse.getValue(), LocalDate.now());
+                enrollDAO.updateRecord(enrollment, this.emailCellValue, this.courseCellValue);
                 refreshTable();
             }
         } catch (Exception e) {
@@ -143,7 +144,7 @@ public class EnrollmentMenu {
     }
 
     private void insertRecord() {
-        if (!enrollDAO.addRecord(comboBoxCourse.getValue().toString(), comboBoxMail.getValue().toString())) {
+        if (!enrollDAO.addRecord(comboBoxCourse.getValue().toString(), comboBoxStudent.getValue().toString())) {
             showDuplicationError();
         }
         refreshTable();
@@ -193,11 +194,11 @@ public class EnrollmentMenu {
         introText.setFont(Font.font("Verdana", 15));
 
         gridPane.add(mailText, 0, 1);
-        gridPane.add(comboBoxMail, 1, 1);
-        comboBoxMail.setPrefWidth(150);
-        comboBoxMail.getItems().clear();
+        gridPane.add(comboBoxStudent, 1, 1);
+        comboBoxStudent.setPrefWidth(150);
+        comboBoxStudent.getItems().clear();
         for (Student student : studentDAO.getStudentList()) {
-            comboBoxMail.getItems().add(student.getEmail());
+            comboBoxStudent.getItems().add(student);
         }
 
         gridPane.add(errorMail, 2, 1);
@@ -207,7 +208,7 @@ public class EnrollmentMenu {
         comboBoxCourse.setPrefWidth(150);
         comboBoxCourse.getItems().clear();
         for (Course course : courseDAO.getCourseList()) {
-            comboBoxCourse.getItems().add(course.getCourseName());
+            comboBoxCourse.getItems().add(course);
         }
 
 

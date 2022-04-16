@@ -123,15 +123,15 @@ public class EnrollmentDAO {
         return false;
     }
 
-    public boolean updateRecord(String comboboxMail, String comboboxCourse, String cellMail, String cellCourse) {
+    public boolean updateRecord(Enrollment enrollment, String cellMail, String cellCourse) {
         String query = "UPDATE Enrollment SET Email = ? , CourseName = ? WHERE Email = ? AND CourseName = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         try {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, comboboxMail);
-            stmt.setString(2, comboboxCourse);
+            stmt.setString(1, enrollment.getStudent().getEmail());
+            stmt.setString(2, enrollment.getCourse().getCourseName());
             stmt.setString(3, cellMail);
             stmt.setString(4, cellCourse);
             stmt.executeUpdate();
