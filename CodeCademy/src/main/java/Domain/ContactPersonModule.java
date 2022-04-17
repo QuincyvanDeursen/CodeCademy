@@ -1,7 +1,7 @@
 package Domain;
 
 public class ContactPersonModule {
-    private String name;
+    private final String name;
     private String email;
 
     //Constructor

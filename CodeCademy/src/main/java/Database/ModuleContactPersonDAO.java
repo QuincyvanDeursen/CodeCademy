@@ -1,7 +1,6 @@
 package Database;
 
 import Domain.ContactPersonModule;
-import Domain.SpeakerWebcast;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,9 +1,9 @@
 package Domain;
 
 public class SpeakerWebcast {
-    private int speakerID;
+    private final int speakerID;
     private String email;
-    private String name;
+    private final String name;
 
     //Constructor
     public SpeakerWebcast(int speakerID, String email, String OrganizationSpeaker) {

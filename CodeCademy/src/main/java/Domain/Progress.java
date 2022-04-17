@@ -3,10 +3,10 @@ package Domain;
 import java.time.LocalDate;
 
 public class Progress {
-    private LocalDate localDate;
+    private final LocalDate localDate;
     private Student student;
-    private ContentItem contentItem;
-    private int percentage;
+    private final ContentItem contentItem;
+    private final int percentage;
 
     //Constructor
     public Progress(LocalDate localDate, Student student, ContentItem contentItem, int percentage) {

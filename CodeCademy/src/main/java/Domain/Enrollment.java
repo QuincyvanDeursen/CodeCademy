@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Enrollment {
     private Student student;
     private Course course;
-    private LocalDate registrationDate;
+    private final LocalDate registrationDate;
 
     //Constructor
     public Enrollment(Student student, Course course, LocalDate registrationDate) {

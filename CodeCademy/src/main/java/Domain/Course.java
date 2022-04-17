@@ -3,12 +3,12 @@ package Domain;
 import java.util.ArrayList;
 
 public class Course {
-    private String courseName;
-    private String topic;
-    private Level level;
-    private String preface;
-    private ArrayList<Course> relatedCourses;
-    private ArrayList<ContentItem> contentItems;
+    private final String courseName;
+    private final String topic;
+    private final Level level;
+    private final String preface;
+    private final ArrayList<Course> relatedCourses;
+    private final ArrayList<ContentItem> contentItems;
 
     //Constructor
     public Course(String courseName, String topic, Level level, String preface, ArrayList<Course> relatedCourses, ArrayList<ContentItem> contentItems) {

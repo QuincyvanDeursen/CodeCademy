@@ -3,8 +3,8 @@ package Domain;
 import java.util.Date;
 
 public class Module extends ContentItem{
-    private double version;
-    private int serialNumber;
+    private final double version;
+    private final int serialNumber;
     private final ContactPersonModule contactPersonModule;
 
     //Constructor

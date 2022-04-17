@@ -3,8 +3,8 @@ package Domain;
 import java.util.Date;
 
 public class Webcast extends ContentItem{
-    private String url;
-    private int duration;
+    private final String url;
+    private final int duration;
     private final SpeakerWebcast speakerWebcast;
     
     //Constructor

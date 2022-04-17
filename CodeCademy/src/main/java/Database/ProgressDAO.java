@@ -89,7 +89,7 @@ public class ProgressDAO {
     }
 
     //For a given student and course, give the corresponding progress of each module. (view3)
-    //Method below returns a HashMap that contains the name of the module and the progression of the corresponding course and student.
+    //Method below returns a Arraylist that contains the name of the module and the progression of the corresponding course and student.
     public ArrayList<String> getModuleProgression(Student student, Course course) {
         String query = "SELECT ModuleTitle, Progression FROM CourseContent Join ContentItem ON ContentItem.ContentID = CourseContent.ContentID Join Progress ON Progress.ContentID = ContentItem.ContentID WHERE Email = ? AND CourseName = ? AND ModuleTitle IS NOT NULL";
         Connection conn = null;

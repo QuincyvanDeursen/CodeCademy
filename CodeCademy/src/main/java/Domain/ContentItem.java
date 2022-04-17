@@ -3,10 +3,10 @@ package Domain;
 import java.util.Date;
 
 public abstract class ContentItem {
-    private int ID;
-    private String title;
-    private Date publicationDate;
-    private Status status;
+    private final int ID;
+    private final String title;
+    private final Date publicationDate;
+    private final Status status;
 
     //Constructor
     public ContentItem(int ID, String title, Date publicationDate, Status status) {

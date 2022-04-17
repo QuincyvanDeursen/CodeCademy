@@ -6,14 +6,14 @@ import java.time.LocalDate;
 
 public class Student {
     private String email;
-    private String name;
-    private LocalDate birthDate;
-    private Gender gender;
-    private String city;
-    private String postalCode;
-    private String street;
-    private int houseNr;
-    private String country;
+    private final String name;
+    private final LocalDate birthDate;
+    private final Gender gender;
+    private final String city;
+    private final String postalCode;
+    private final String street;
+    private final int houseNr;
+    private final String country;
 
     //constructor
     public Student(String email, String name, LocalDate birthDate, Gender gender, String city, String postalCode, String street, int houseNr, String country) {
