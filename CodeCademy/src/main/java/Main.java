@@ -1,5 +1,4 @@
-package GUI;
-
+import GUI.MainMenu;
 import javafx.application.Application;
 
 
