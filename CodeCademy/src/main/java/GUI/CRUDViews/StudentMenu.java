@@ -24,64 +24,60 @@ import java.util.ArrayList;
 
 
 public class StudentMenu {
-    private StudentDAO studentDAO = new StudentDAO();
-    private MainMenu mainMenu = new MainMenu();
-    private PostalCode postalCodeTool = new PostalCode();
+    private final StudentDAO studentDAO = new StudentDAO();
+    private final MainMenu mainMenu = new MainMenu();
 
-    private TableView<Student> studentTable = new TableView<>();
-    private TableColumn<Student, String> emailCol = new TableColumn<>("Email");
-    private TableColumn<Student, String> nameCol = new TableColumn<>("Naam");
-    private TableColumn<Student, LocalDate> bdCol = new TableColumn<>("Geboortedatum");
-    private TableColumn<Student, String> genderCol = new TableColumn<>("Geslacht");
-    private TableColumn<Student, String> cityCol = new TableColumn<>("Woonplaats");
-    private TableColumn<Student, String> pcCol = new TableColumn<>("Postcode");
-    private TableColumn<Student, String> streetCol = new TableColumn<>("Straatnaam");
-    private TableColumn<Student, Integer> houseNrCol = new TableColumn<>("Huisnummer");
-    private TableColumn<Student, String> countryCol = new TableColumn<>("Land");
+    private final TableView<Student> studentTable = new TableView<>();
+    private final TableColumn<Student, String> emailCol = new TableColumn<>("Email");
+    private final TableColumn<Student, String> nameCol = new TableColumn<>("Naam");
+    private final TableColumn<Student, LocalDate> bdCol = new TableColumn<>("Geboortedatum");
+    private final TableColumn<Student, String> genderCol = new TableColumn<>("Geslacht");
+    private final TableColumn<Student, String> cityCol = new TableColumn<>("Woonplaats");
+    private final TableColumn<Student, String> pcCol = new TableColumn<>("Postcode");
+    private final TableColumn<Student, String> streetCol = new TableColumn<>("Straatnaam");
+    private final TableColumn<Student, Integer> houseNrCol = new TableColumn<>("Huisnummer");
+    private final TableColumn<Student, String> countryCol = new TableColumn<>("Land");
 
-    private Label emailLabel = new Label("Email: ");
-    private TextField tfEmail = new TextField();
+    private final Label emailLabel = new Label("Email: ");
+    private final TextField tfEmail = new TextField();
 
-    private Label nameLabel = new Label("Naam: ");
-    private TextField tfName = new TextField();
+    private final Label nameLabel = new Label("Naam: ");
+    private final TextField tfName = new TextField();
 
-    private Label birthDateLabel = new Label("GeboorteDatum dd/mm/jjjj: ");
-    private TextField tfBirthMonth = new TextField();
-    private TextField tfBirthDay = new TextField();
-    private TextField tfBirthYear = new TextField();
+    private final Label birthDateLabel = new Label("GeboorteDatum dd/mm/jjjj: ");
+    private final TextField tfBirthMonth = new TextField();
+    private final TextField tfBirthDay = new TextField();
+    private final TextField tfBirthYear = new TextField();
 
-    private Label genderLabel = new Label("Geslacht: ");
-    private ComboBox genderMenuBox = new ComboBox();
+    private final Label genderLabel = new Label("Geslacht: ");
+    private final ComboBox genderMenuBox = new ComboBox();
 
-    private Label cityLabel = new Label("woonplaats: ");
-    private TextField tfCity = new TextField();
+    private final Label cityLabel = new Label("woonplaats: ");
+    private final TextField tfCity = new TextField();
 
-    private Label pcLabel = new Label("Postcode: ");
-    private TextField tfPostalCode = new TextField();
+    private final Label pcLabel = new Label("Postcode: ");
+    private final TextField tfPostalCode = new TextField();
 
-    private Label streetLabel = new Label("Straatnaam: ");
-    private TextField tfStreet = new TextField();
+    private final Label streetLabel = new Label("Straatnaam: ");
+    private final TextField tfStreet = new TextField();
 
-    private Label houseNrLabel = new Label("Huisnummer: ");
-    private TextField tfhouseNr = new TextField();
+    private final Label houseNrLabel = new Label("Huisnummer: ");
+    private final TextField tfhouseNr = new TextField();
 
-    private Label countryLabel = new Label("Land: ");
-    private TextField tfCountry = new TextField();
+    private final Label countryLabel = new Label("Land: ");
+    private final TextField tfCountry = new TextField();
 
-    private Button btnInsert = new Button("Toevoegen");
-    private Button btnDelete = new Button("Verwijderen");
-    private Button btnUpdate = new Button("Update");
-    private Button btnSearch = new Button("Zoeken");
-    private Button btnRefresh = new Button("Refresh");
+    private final Button btnInsert = new Button("Toevoegen");
+    private final Button btnDelete = new Button("Verwijderen");
+    private final Button btnUpdate = new Button("Update");
+    private final Button btnSearch = new Button("Zoeken");
+    private final Button btnRefresh = new Button("Refresh");
     public Button btnBack = new Button("Terug");
     private String originalEmail;
 
 
-
-
-
     // methode maakt GUI voor cursisten
-    public  Scene getView(Stage stage) {
+    public Scene getView(Stage stage) {
         //  Borderpane with styling (parent)
         BorderPane bp = new BorderPane();
         bp.setStyle("-fx-background-color: #FAF3DC;");
@@ -104,7 +100,7 @@ public class StudentMenu {
 
         //Creating hbox with styling and adding crud-buttons
         HBox hboxBtns2 = new HBox();
-        hboxBtns2.getChildren().setAll(this.btnBack,  this.btnSearch, this.btnRefresh);
+        hboxBtns2.getChildren().setAll(this.btnBack, this.btnSearch, this.btnRefresh);
         hboxBtns2.setSpacing(25);
         hboxBtns2.setPadding(new Insets(20, 0, 0, 0));
 
@@ -156,21 +152,21 @@ public class StudentMenu {
     }
 
     //Method (for the insert button) to create a new student in the database
-    private void insertStudentToDatabase(){
+    private void insertStudentToDatabase() {
         Student student = createStudentObjectFromTextFields();
-        if (studentDAO.createStudent(student)){
+        if (studentDAO.createStudent(student)) {
             confirmationMessage("Student toegevoegd.");
-        } else{
+        } else {
             warningMessage("Toevoegen van student mislukt.");
         }
         refreshTable();
     }
 
     //method (for the update button) to update a student in the database
-    private void updateStudent(){
+    private void updateStudent() {
         Student student = createStudentObjectFromTextFields();
-        if (student != null){
-            if(studentDAO.updateStudent(student, originalEmail)){
+        if (student != null) {
+            if (studentDAO.updateStudent(student, originalEmail)) {
                 confirmationMessage("Update uitgevoerd");
             }
             refreshTable();
@@ -178,19 +174,20 @@ public class StudentMenu {
     }
 
     //method (for the search button) to find a student in the database
-    private void findStudent(){
+    private void findStudent() {
         ArrayList<Student> foundStudents = studentDAO.findStudent(tfEmail.getText());
-        if (foundStudents.size() !=0){
+        if (foundStudents.size() != 0) {
             this.studentTable.getItems().clear();
-            for (Student student: foundStudents) {
+            for (Student student : foundStudents) {
                 this.studentTable.getItems().add(student);
             }
         }
 
     }
 
-    private void deleteStudent(){
-        if (studentDAO.deleteStudent(tfEmail.getText())){
+    //    Deletes a record in the table with the given data that is needed to delete the record.
+    private void deleteStudent() {
+        if (studentDAO.deleteStudent(tfEmail.getText())) {
             confirmationMessage("Student verwijderd");
         } else {
             warningMessage("Verwijderen mislukt");
@@ -199,35 +196,34 @@ public class StudentMenu {
     }
 
 
-
     //Method to create a student object. This method also uses the mail, date and postalcode tests to make sure the provided data is correct.
-    private Student createStudentObjectFromTextFields(){
+    private Student createStudentObjectFromTextFields() {
         LocalDate date;
-        int day =  Integer.parseInt(tfBirthDay.getText());
+        int day = Integer.parseInt(tfBirthDay.getText());
         int month = Integer.parseInt(tfBirthMonth.getText());
         int year = Integer.parseInt(tfBirthYear.getText());
         String postalcode;
 
         boolean dateBoolean = DateTools.validateDate(day, month, year);
-        if (!dateBoolean){
+        if (!dateBoolean) {
             warningMessage("Ongeldige geboortedatum");
             return null;
         }
         boolean mailBoolean = MailTools.validateMailAddress(tfEmail.getText());
-        if (!mailBoolean){
+        if (!mailBoolean) {
             warningMessage("Ongeldig mail adres.");
             return null;
         }
         try {
-            postalCodeTool.formatPostalCode(tfPostalCode.getText());
-            postalcode = postalCodeTool.formatPostalCode(tfPostalCode.getText());
-        } catch (Exception e){
+            PostalCode.formatPostalCode(tfPostalCode.getText());
+            postalcode = PostalCode.formatPostalCode(tfPostalCode.getText());
+        } catch (Exception e) {
             warningMessage("ongeldige postcode ingevoerd.");
             e.printStackTrace();
             return null;
         }
 
-        date = LocalDate.of(year,month,day);
+        date = LocalDate.of(year, month, day);
         Student student = new Student(
                 tfEmail.getText(),
                 tfName.getText(),
@@ -243,13 +239,12 @@ public class StudentMenu {
 
 
     //Method which refreshes the table's content.
-    private void refreshTable(){
+    private void refreshTable() {
         this.studentTable.getItems().clear();
         ArrayList<Student> studentList = studentDAO.getStudentList();
-        for (Student student: studentList) {
+        for (Student student : studentList) {
             this.studentTable.getItems().add(student);
         }
-
     }
 
 
@@ -266,13 +261,13 @@ public class StudentMenu {
                 this.streetCol,
                 this.houseNrCol,
                 this.countryCol);
-        setStudentDataIntoTable(studentDAO.getStudentList(), this.studentTable);
+        setStudentDataIntoTable(studentDAO.getStudentList());
         return studentTable;
     }
 
 
     //This method places the student data into the table.
-    public void setStudentDataIntoTable(ArrayList<Student> studentList, TableView tableView)  {
+    public void setStudentDataIntoTable(ArrayList<Student> studentList) {
         this.emailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
         this.nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         this.genderCol.setCellValueFactory(new PropertyValueFactory<>("Gender"));
@@ -282,12 +277,12 @@ public class StudentMenu {
         this.streetCol.setCellValueFactory(new PropertyValueFactory<>("Street"));
         this.houseNrCol.setCellValueFactory(new PropertyValueFactory<>("HouseNr"));
         this.countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
-        for (Student student: studentList) {
+        for (Student student : studentList) {
             this.studentTable.getItems().add(student);
         }
     }
 
-    //This method fills in the textfields when a cell from the table is clicked.
+    //This method fills in the text fields when a cell from the table is clicked.
     private void setCellValueFromTableToTextField() {
         try {
             studentTable.setOnMouseClicked(e -> {
@@ -324,8 +319,6 @@ public class StudentMenu {
         message.setContentText(errorMsg);
         message.show();
     }
-
-
 }
 
 

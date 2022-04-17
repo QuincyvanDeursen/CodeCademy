@@ -31,11 +31,12 @@ public class ProgressDAO {
             return false;
         }
         finally{
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
+//    Updates the progress record with the given progress object information.
     public boolean updateProgress(Progress progress){
         String query = "UPDATE Progress SET Progression = ?, UpdateDate = ? WHERE Email = ? AND ContentID = ?";
         Connection conn = null;
@@ -53,8 +54,8 @@ public class ProgressDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return false;
     }

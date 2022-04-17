@@ -1,7 +1,6 @@
 package Domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Enrollment {
     private Student student;
@@ -36,7 +35,5 @@ public class Enrollment {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
+
 }

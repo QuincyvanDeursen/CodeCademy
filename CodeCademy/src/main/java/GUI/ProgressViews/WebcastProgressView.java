@@ -17,22 +17,22 @@ import javafx.scene.layout.GridPane;
 import java.time.LocalDate;
 
 public class WebcastProgressView implements EventHandler {
-    private ProgressDAO progressDAO = new ProgressDAO();
-    private EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
-    private Label title = new Label("Update de voortgang van een webast van een student.");
-    private ComboBox<Student> comboBoxStudent = new ComboBox<>();
-    private ComboBox<Course> comboBoxCourse = new ComboBox<>();
-    private ComboBox<ContentItem> comboBoxWebcast = new ComboBox<>();
-    private TextField progressTextField = new TextField();
-    private Label selectEmailLabel = new Label("Selecteer een email");
-    private Label selectCourseLabel = new Label("Selecteer een cursus");
-    private Label selectModuleLabel = new Label("Selecteer een webcast");
-    private Label setProgressLabel = new Label("Voer de progressie(%) in");
-    private Button showCourseButton = new Button("Toon Cursussen");
-    private Button showWebcastButton = new Button("Toon webcasts");
-    private Button updateButton = new Button("Update");
+    private final ProgressDAO progressDAO = new ProgressDAO();
+    private final EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
+    private final Label title = new Label("Update de voortgang van een webast van een student.");
+    private final ComboBox<Student> comboBoxStudent = new ComboBox<>();
+    private final ComboBox<Course> comboBoxCourse = new ComboBox<>();
+    private final ComboBox<ContentItem> comboBoxWebcast = new ComboBox<>();
+    private final TextField progressTextField = new TextField();
+    private final Label selectEmailLabel = new Label("Selecteer een email");
+    private final Label selectCourseLabel = new Label("Selecteer een cursus");
+    private final Label selectModuleLabel = new Label("Selecteer een webcast");
+    private final Label setProgressLabel = new Label("Voer de progressie(%) in");
+    private final Button showCourseButton = new Button("Toon Cursussen");
+    private final Button showWebcastButton = new Button("Toon webcasts");
+    private final Button updateButton = new Button("Update");
 
-
+    //    Returns a BorderPane that will show content that is made within this class.
     public BorderPane getPane() {
         BorderPane mainPane = new BorderPane();
         title.setStyle("-fx-font-weight: bold;" +
@@ -45,6 +45,7 @@ public class WebcastProgressView implements EventHandler {
         return mainPane;
     }
 
+    //    Returns a grid pane that shows the design of the page.
     private Node getTexts() {
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -89,7 +90,7 @@ public class WebcastProgressView implements EventHandler {
         return gridPane;
     }
 
-
+    //    Handles the setOnAction buttons.
     @Override
     public void handle(Event event) {
         if (event.getSource() ==showCourseButton){
@@ -103,6 +104,7 @@ public class WebcastProgressView implements EventHandler {
         }
     }
 
+    //    Shows the next step once you chose an email.
     private void showCourseButtonFunctionality(){
         if (comboBoxStudent.getValue() == null){
             warningMessage("Selecteer eerst een email.");
@@ -117,6 +119,7 @@ public class WebcastProgressView implements EventHandler {
         return;
     }
 
+    //    Shows the next step once you chose a course.
     private void showModuleButtonFunctionality(){
         if (comboBoxCourse.getValue() == null){
             warningMessage("Selecteer eerst een cursus.");
@@ -136,21 +139,25 @@ public class WebcastProgressView implements EventHandler {
         return;
     }
 
+    //    Handles the SetOnAction on the update button.
     private void updateButtonFunctionality(){
         if (comboBoxWebcast.getValue() == null){
             warningMessage("Selecteer eerst een webcast.");
             return;
         }
-        if (progressTextField.getText() != null || NumericRangeTool.isValidPercentage(Integer.parseInt(progressTextField.getText()))){
+        if (progressTextField.getText() != null && NumericRangeTool.isValidPercentage(Integer.parseInt(progressTextField.getText()))){
             Progress progress = new Progress(LocalDate.now(), comboBoxStudent.getValue(), comboBoxWebcast.getValue(),(Integer.parseInt(progressTextField.getText())));
             progressDAO.updateProgress(progress);
             confirmationMessage("Progressie geupdatet!");
             restoreView();
             return;
+        } else {
+            warningMessage("Vul een geldige percentage (0-100) in!");
         }
-        warningMessage("Vul een geldige percentage (0-100) in!");
+
     }
 
+    //    Sets the page back to step one once a record has been updated.
     private void restoreView(){
         this.comboBoxCourse.getItems().clear();
         this.comboBoxWebcast.getItems().clear();
@@ -164,6 +171,7 @@ public class WebcastProgressView implements EventHandler {
         this.progressTextField.setVisible(false);
     }
 
+    //    Shows a confirmation message on screen.
     private static void confirmationMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(message);

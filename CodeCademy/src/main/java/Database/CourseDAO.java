@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class CourseDAO {
     ContentItemDAO contentItemDAO = new ContentItemDAO();
 
-
+    // Returns a course object by sending a query to the database and pulling the data from the records.
     public Course readCourse(String courseName) {
         String query = "SELECT * FROM Course WHERE CourseName = ? ";
 
@@ -19,7 +19,7 @@ public class CourseDAO {
         try {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setString(1,courseName);
+            stmt.setString(1, courseName);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Course(
@@ -35,14 +35,23 @@ public class CourseDAO {
             e.getStackTrace();
             System.out.println("readCourse");
         } finally {
-            try {if (rs != null) rs.close(); } catch (Exception e) {
-            }try {if (stmt != null) stmt.close(); } catch (Exception e) {
-            }try {if (conn != null) conn.close();} catch (Exception e) {
+            try {
+                if (rs != null) rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (stmt != null) stmt.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (Exception e) {
             }
         }
         return null;
     }
 
+    // Returns an Arraylist filled with Course objects by sending a query to the database and pulling the data from the records.
     public ArrayList<Course> getCourseList() {
         ArrayList<Course> courseArrayList = new ArrayList<>();
         String query = "Select * from Course";

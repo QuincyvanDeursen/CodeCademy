@@ -51,10 +51,7 @@ public class MailTools {
             return false;
         }
         //no tld part
-        if (mailAddress.split("@")[1].split("\\.").length < 2) {
-            return false;
-        }
-        return true;
+        return mailAddress.split("@")[1].split("\\.").length >= 2;
     }
 }
 

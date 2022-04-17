@@ -25,48 +25,8 @@ public class Course {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public String getPreface() {
-        return preface;
-    }
-
-    public void setPreface(String preface) {
-        this.preface = preface;
-    }
-
-    public ArrayList<Course> getRelatedCourses() {
-        return relatedCourses;
-    }
-
-    public void setRelatedCourses(ArrayList<Course> relatedCourses) {
-        this.relatedCourses = relatedCourses;
-    }
-
     public ArrayList<ContentItem> getContentItems() {
         return contentItems;
-    }
-
-    public void setContentItems(ArrayList<ContentItem> contentItems) {
-        this.contentItems = contentItems;
     }
 
     @Override

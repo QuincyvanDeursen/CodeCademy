@@ -29,23 +29,11 @@ public class Progress {
         return contentItem;
     }
 
-    public void setContentItem(ContentItem contentItem) {
-        this.contentItem = contentItem;
-    }
-
     public int getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
     public LocalDate getLocalDate() {
         return localDate;
-    }
-
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
     }
 }

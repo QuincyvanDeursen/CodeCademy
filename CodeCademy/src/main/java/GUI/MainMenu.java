@@ -18,13 +18,13 @@ import javafx.stage.Stage;
 
 public class MainMenu extends Application implements EventHandler {
 
-    private Label crudLabel = new Label("CRUD");
-    private Label statisticsLabel = new Label("Statistieken");
-    private Label progressLabel = new Label("Update Voortgang");
-    private Button studentButton = new Button("Cursisten");
-    private Button enrollButton = new Button("Inschrijvingen");
-    private Button statisticsButton = new Button("Statistieken");
-    private Button progressButton = new Button("Voortgang");
+    private final Label crudLabel = new Label("CRUD");
+    private final Label statisticsLabel = new Label("Statistieken");
+    private final Label progressLabel = new Label("Update Voortgang");
+    private final Button studentButton = new Button("Cursisten");
+    private final Button enrollButton = new Button("Inschrijvingen");
+    private final Button statisticsButton = new Button("Statistieken");
+    private final Button progressButton = new Button("Voortgang");
     private Stage stage;
 
 

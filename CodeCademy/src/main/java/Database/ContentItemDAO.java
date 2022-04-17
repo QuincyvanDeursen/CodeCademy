@@ -7,8 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ContentItemDAO {
-    private WebcastSpeakerDAO  webcastSpeakerDAO = new WebcastSpeakerDAO();
-    private ModuleContactPersonDAO moduleContactPersonDAO = new ModuleContactPersonDAO();
+    private final WebcastSpeakerDAO  webcastSpeakerDAO = new WebcastSpeakerDAO();
+    private final ModuleContactPersonDAO moduleContactPersonDAO = new ModuleContactPersonDAO();
 
 
     // Retrieve a list of modules for a given course

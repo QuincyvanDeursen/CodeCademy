@@ -9,9 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ProgressMenu {
-    private MainMenu mainMenu = new MainMenu();
-    private Button webcastProgress = new Button("Webcast");
-    private Button moduleProgress = new Button("Module");
+    private final MainMenu mainMenu = new MainMenu();
+    private final Button webcastProgress = new Button("Webcast");
+    private final Button moduleProgress = new Button("Module");
     public Button backBtn = new Button("Terug");
 
     public Scene getView(Stage stage) {

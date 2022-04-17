@@ -81,38 +81,6 @@ public class Student {
         this.email = email;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setHouseNr(int houseNr) {
-        this.houseNr = houseNr;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     @Override
     public String toString() {
         return this.email;

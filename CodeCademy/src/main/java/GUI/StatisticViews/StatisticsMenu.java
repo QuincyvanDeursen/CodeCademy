@@ -9,15 +9,15 @@ import javafx.stage.Stage;
 
 public class StatisticsMenu {
 
-    private MainMenu mainMenu = new MainMenu();
+    private final MainMenu mainMenu = new MainMenu();
 
-    private Button topWebcasts = new Button("Top 3 Webcasts");
-    private Button averageModuleProgress = new Button("Module Voortgang");
-    private Button studentModuleProgress = new Button("Student Voortgang");
-    private Button courseCompleteAmount = new Button("Behaalde Cursussen");
+    private final Button topWebcasts = new Button("Top 3 Webcasts");
+    private final Button averageModuleProgress = new Button("Module Voortgang");
+    private final Button studentModuleProgress = new Button("Student Voortgang");
+    private final Button courseCompleteAmount = new Button("Behaalde Cursussen");
     public Button backBtn = new Button("Terug");
 
-//     creates a view
+    //     creates a view
     public Scene getView(Stage stage) {
         BorderPane mainPane = new BorderPane();
         mainPane.setPadding(new Insets(0, 25, 0, 0));
@@ -29,7 +29,7 @@ public class StatisticsMenu {
         return new Scene(mainPane, 1000, 500);
     }
 
-//    shows context in the center based on the class its code
+    //    shows context in the center based on the class its code
     private void showContentOnButtonClick(Stage stage, BorderPane mainPane) {
         this.backBtn.setOnAction(actionEvent -> stage.setScene(mainMenu.getView(stage)));
 
@@ -54,7 +54,7 @@ public class StatisticsMenu {
         });
     }
 
-//    returns a new vbox
+    //    returns a new vbox
     private VBox GetSideMenu() {
         VBox box = new VBox();
         vBoxStyling(box);
@@ -62,8 +62,8 @@ public class StatisticsMenu {
         return box;
     }
 
-//    adds all buttons to a vbox and sets styling for all buttons
-    private void createButtons(VBox box ) {
+    //    adds all buttons to a vbox and sets styling for all buttons
+    private void createButtons(VBox box) {
         box.getChildren().setAll(this.topWebcasts, this.averageModuleProgress, this.studentModuleProgress, this.courseCompleteAmount, this.backBtn);
         setButtonStyling(topWebcasts);
         setButtonStyling(averageModuleProgress);
@@ -85,7 +85,7 @@ public class StatisticsMenu {
         button.setMinWidth(260);
     }
 
-//    sets the design for the vbox
+    //    sets the design for the vbox
     private void vBoxStyling(VBox box) {
         box.setStyle("-fx-background-color: #FAF3DC;");
         box.setPadding(new Insets(25, 25, 25, 25));

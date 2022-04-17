@@ -19,11 +19,7 @@ public class DateTools {
             return true;
         }
         //Check to see if the 30-day-months do indeed have a maximum of 31 days.
-        if ((month == 4 || month == 6 || month == 9 || month == 11) && (day <= 30 && day >= 1)) {
-            return true;
-        }
-
-        return false;
+        return (month == 4 || month == 6 || month == 9 || month == 11) && (day <= 30 && day >= 1);
 
     }
 

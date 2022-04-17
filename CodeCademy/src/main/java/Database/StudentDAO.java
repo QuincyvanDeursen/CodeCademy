@@ -37,10 +37,10 @@ public class StudentDAO {
             e.printStackTrace();
         }
         finally{
-                try { if (rs != null) rs.close(); } catch (Exception e) {};
-                try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-                try { if (conn != null) conn.close(); } catch (Exception e) {};
-            }
+                try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
         return null;
     }
 
@@ -68,8 +68,8 @@ public class StudentDAO {
             return false;
         }
         finally{
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
@@ -97,8 +97,8 @@ public class StudentDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return false;
     }
@@ -135,9 +135,9 @@ public class StudentDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }
@@ -158,9 +158,9 @@ public class StudentDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return  false;
     }
@@ -192,9 +192,7 @@ public class StudentDAO {
             }
         }
         catch(Exception e){
-            System.out.println(e);
             e.printStackTrace();
-            System.out.println("readStudent catch has been rolled");
         }
         finally{
             try { if (rs != null) rs.close(); } catch (Exception e) {}

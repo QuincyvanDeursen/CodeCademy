@@ -14,14 +14,15 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class AverageModulesView {
-    private ProgressDAO progressDAO = new ProgressDAO();
-    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
-    private Text title = new Text("Gemiddelde Module progressie!");
-    private ComboBox<Course> comboBoxCourse = new ComboBox<>();
-    private Button checkButton = new Button("Check");
-    private Text returningResult = new Text("Gemiddelde progressie modules van de cursus: ");
-    ArrayList<String> listWithAverageData = new ArrayList<>();
+    private final ProgressDAO progressDAO = new ProgressDAO();
+    private final EnrollmentDAO enrollDAO = new EnrollmentDAO();
+    private final Text title = new Text("Gemiddelde Module progressie!");
+    private final ComboBox<Course> comboBoxCourse = new ComboBox<>();
+    private final Button checkButton = new Button("Check");
+    private final Text returningResult = new Text("Gemiddelde progressie modules van de cursus: ");
+    private ArrayList<String> listWithAverageData = new ArrayList<>();
 
+    //    Returns a borderpane that shows the whole content that is made within this class.
     public BorderPane getPane() {
         BorderPane mainPane = new BorderPane();
         title.setStyle("-fx-font-weight: bold;" +
@@ -34,6 +35,7 @@ public class AverageModulesView {
         return mainPane;
     }
 
+    //    Returns a grid pane that decides the design on the content that is shows.
     private Node getTexts() {
         GridPane getContext = new GridPane();
 
@@ -55,6 +57,7 @@ public class AverageModulesView {
         return getContext;
     }
 
+    //    Handles the setOnAction for the button.
     private void buttonSetOnActionResult() {
         this.checkButton.setOnAction(actionEvent -> {
             listWithAverageData = progressDAO.getAverageProgressionOfAllModulesFromCourse(comboBoxCourse.getSelectionModel().getSelectedItem());
@@ -69,11 +72,12 @@ public class AverageModulesView {
         });
     }
 
+    //    Returns a string with the data that is needed.
     private String printListWithData() {
-        StringBuilder returingList = new StringBuilder();
+        StringBuilder returningList = new StringBuilder();
         for (String modulePlusAverage : listWithAverageData) {
-            returingList.append(modulePlusAverage + " % \n");
+            returningList.append(modulePlusAverage + " % \n");
         }
-        return returingList.toString();
+        return returningList.toString();
     }
 }

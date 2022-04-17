@@ -3,8 +3,8 @@ package Database;
 import java.sql.*;
 
 public class DBConnection {
-    private static String connectionURL = "jdbc:sqlserver://localhost;databaseName=Codecademy;integratedSecurity=true;";
-    private static String SQLDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String connectionURL = "jdbc:sqlserver://localhost;databaseName=Codecademy;integratedSecurity=true;";
+    private static final String SQLDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
     // Method to create the connection with the CodeCademy database;
     // Method is static so no DBConnection object has to be innitialized.

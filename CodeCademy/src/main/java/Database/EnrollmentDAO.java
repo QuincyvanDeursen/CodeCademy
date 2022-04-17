@@ -9,10 +9,11 @@ import java.util.ArrayList;
 
 public class EnrollmentDAO {
 
-    private StudentDAO studentDAO = new StudentDAO();
-    private CourseDAO courseDAO = new CourseDAO();
-    private ProgressDAO progressDAO = new ProgressDAO();
+    private final StudentDAO studentDAO = new StudentDAO();
+    private final CourseDAO courseDAO = new CourseDAO();
+    private final ProgressDAO progressDAO = new ProgressDAO();
 
+//    Returns an Arraylist filled with Enrollment objects by sending a query to the database and make the objects by the pulled records.
     public ArrayList<Enrollment> getEnrollmentList() {
         ArrayList<Enrollment> enrollmentList = new ArrayList<>();
         String query = "select Email, CourseName, RegistrationDate from Enrollment";
@@ -52,6 +53,7 @@ public class EnrollmentDAO {
         return enrollmentList;
     }
 
+//    Adds a record into the Enrollment table with the given values.
     public boolean addRecord(String course, String mail) {
         String query = "INSERT INTO Enrollment VALUES (?, ?, ?, ?)";
         Connection conn = null;
@@ -97,6 +99,7 @@ public class EnrollmentDAO {
         }
     }
 
+//    Deletes a record from the Enrollment table with the given object.
     public boolean deleteRecord(Enrollment enrollment) {
         String query = "DELETE FROM Enrollment WHERE Email = ? AND CourseName = ?";
         Connection conn = null;
@@ -123,6 +126,7 @@ public class EnrollmentDAO {
         return false;
     }
 
+//    Updates a record with the given object, with the new values.
     public boolean updateRecord(Enrollment enrollment, String cellMail, String cellCourse) {
         String query = "UPDATE Enrollment SET Email = ? , CourseName = ? WHERE Email = ? AND CourseName = ?";
         Connection conn = null;
@@ -173,9 +177,9 @@ public class EnrollmentDAO {
             e.printStackTrace();
         }
         finally{
-            try { if (rs != null) rs.close(); } catch (Exception e) {};
-            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
-            try { if (conn != null) conn.close(); } catch (Exception e) {};
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return null;
     }

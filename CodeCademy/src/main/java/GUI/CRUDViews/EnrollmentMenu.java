@@ -25,38 +25,38 @@ import java.util.ArrayList;
 public class EnrollmentMenu {
 
 
-    private MainMenu menu = new MainMenu();
-    private EnrollmentDAO enrollDAO = new EnrollmentDAO();
-    private StudentDAO studentDAO = new StudentDAO();
-    private CourseDAO courseDAO = new CourseDAO();
+    private final MainMenu menu = new MainMenu();
+    private final EnrollmentDAO enrollDAO = new EnrollmentDAO();
+    private final StudentDAO studentDAO = new StudentDAO();
+    private final CourseDAO courseDAO = new CourseDAO();
 
     public Button backBtn = new Button("Terug");
     private final Label introText = new Label("Schrijf een student in!");
 
     private final Label mailText = new Label("* email: ");
-    private final TextField mailTextField = new TextField();
     private final Label errorMail = new Label("");
 
-    private Label courseName = new Label("* cursus: ");
-    private ComboBox<Course> comboBoxCourse = new ComboBox();
-    private ComboBox<Student> comboBoxStudent = new ComboBox();
+    private final Label courseName = new Label("* cursus: ");
+    private final ComboBox<Course> comboBoxCourse = new ComboBox();
+    private final ComboBox<Student> comboBoxStudent = new ComboBox();
     private final Label errorCourse = new Label("");
 
 
-    private Button btnInsert = new Button("Toevoegen");
-    private Button btnDelete = new Button("Verwijderen");
-    private Button btnUpdate = new Button("Update");
+    private final Button btnInsert = new Button("Toevoegen");
+    private final Button btnDelete = new Button("Verwijderen");
+    private final Button btnUpdate = new Button("Update");
 
 
     String emailCellValue = "";
     String courseCellValue = "";
 
-    private TableView<Enrollment> enrollTable = new TableView<>();
-    private TableColumn<Enrollment, String> emailCol = new TableColumn<>("Email");
-    private TableColumn<Enrollment, LocalDate> dateCol = new TableColumn<>("Date");
-    private TableColumn<Enrollment, String> courseCol = new TableColumn<>("CourseName");
+    private final TableView<Enrollment> enrollTable = new TableView<>();
+    private final TableColumn<Enrollment, String> emailCol = new TableColumn<>("Email");
+    private final TableColumn<Enrollment, LocalDate> dateCol = new TableColumn<>("Date");
+    private final TableColumn<Enrollment, String> courseCol = new TableColumn<>("CourseName");
 
 
+//    Returns a scene that will show this page.
     public Scene getView(Stage stage) {
         BorderPane mainPane = new BorderPane();
         mainPane.setStyle("-fx-background-color: #FAF3DC;");
@@ -72,8 +72,8 @@ public class EnrollmentMenu {
     }
 
 
+//    Returns a grid pane that handles all the buttons.
     private GridPane getButtons(Stage stage) {
-
         GridPane pane = new GridPane();
 
         pane.add(backBtn, 0, 0);
@@ -87,13 +87,13 @@ public class EnrollmentMenu {
 
         setCellValueToComboBoxOnClick();
 
-
         pane.setPadding(new Insets(50, 50, 50, 50));
         pane.setVgap(30);
         pane.setHgap(30);
         return pane;
     }
 
+//    handles the click listener on the table, and sets data to combo-boxes.
     private void setCellValueToComboBoxOnClick() {
         try {
             this.enrollTable.setOnMouseClicked(e -> {
@@ -110,6 +110,7 @@ public class EnrollmentMenu {
     }
 
 
+//    Sends data to the DAO so it can update a record in the table.
     private void updateRecord() {
         try {
             if (enrollTable.getSelectionModel().getSelectedItem() == null) {
@@ -128,6 +129,7 @@ public class EnrollmentMenu {
 
     }
 
+//    Sends data to the DAO so it can delete a record in the table.
     private void deleteRecord() {
         if (enrollTable.getSelectionModel().getSelectedItem() == null) {
             Alert warning = new Alert(Alert.AlertType.ERROR);
@@ -140,9 +142,9 @@ public class EnrollmentMenu {
             enrollDAO.deleteRecord(enrollment);
             refreshTable();
         }
-
     }
 
+//    Sends data to the DAO, so it can insert a record in a table. Once successful it will refresh the tablke.
     private void insertRecord() {
         if (!enrollDAO.addRecord(comboBoxCourse.getValue().toString(), comboBoxStudent.getValue().toString())) {
             showDuplicationError();
@@ -150,6 +152,7 @@ public class EnrollmentMenu {
         refreshTable();
     }
 
+//    Refreshes the table.
     private void refreshTable() {
         this.enrollTable.getItems().clear();
         ArrayList<Enrollment> enrollList = enrollDAO.getEnrollmentList();
@@ -172,6 +175,7 @@ public class EnrollmentMenu {
         return enrollTable;
     }
 
+//    Sets data pulled from the DAO to the table cells
     public void setEnrollmentDataIntoTable() {
         ArrayList<Enrollment> enrollList = enrollDAO.getEnrollmentList();
         this.emailCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStudent().getEmail()));
@@ -182,12 +186,9 @@ public class EnrollmentMenu {
         }
     }
 
-    //    De code die de exceptie gebruikt om te kijken of er duplicaties zitten in het tabel.
-    private boolean isDuplicateEntryException(SQLException exc) {
-        return exc.getSQLState().equals("23000");
-    }
 
 
+//    Returns a grid pane that shows the design of the page elements.
     private GridPane getContent() {
         GridPane gridPane = new GridPane();
         gridPane.add(introText, 0, 0);
@@ -218,6 +219,7 @@ public class EnrollmentMenu {
         return gridPane;
     }
 
+//    Shows this error once there is an error when inserting a record.
     public void showDuplicationError() {
         Alert warningAlert = new Alert(Alert.AlertType.WARNING);
         warningAlert.setContentText("Er bestaat al een record met deze combinatie!");
